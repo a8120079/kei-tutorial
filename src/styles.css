@@ -1,0 +1,167 @@
+#container {
+  display        : flex;
+  justify-content: center;
+  align-items    : center;
+  height         : 90vh;
+}
+
+.wrapper {
+  padding         : 20px;
+  width           : fit-content;
+  border          : 2px solid #333;
+  background-color: #fff;
+  border-radius   : 20px;
+}
+
+header {
+  margin    : 0 0 10px 0;
+  text-align: center;
+}
+
+#board {
+  width           : 570px;
+  height          : 570px;
+  margin          : 0 auto;
+  padding         : 15px;
+  border          : 1px solid #000;
+  background-color: #f3d79f;
+  position        : relative;
+}
+
+.chess-line {
+  position: relative;
+  width   : 30px;
+  height  : 30px;
+  float   : left;
+}
+
+.chess-line::before {
+  content   : "";
+  position  : absolute;
+  z-index   : 2;
+  left      : 0;
+  right     : 0;
+  top       : 15px;
+  height    : 1px;
+  background: #000;
+}
+
+.chess-line::after {
+  content   : "";
+  position  : absolute;
+  z-index   : 2;
+  left      : 15px;
+  top       : 0;
+  bottom    : 0;
+  width     : 1px;
+  background: #000;
+}
+
+.chess-line.left::before {
+  left  : 15px;
+  right : 0;
+  top   : 15px;
+  height: 1px;
+}
+
+.chess-line.left::after {
+  left  : 15px;
+  top   : 0;
+  bottom: 0;
+  width : 1px;
+}
+
+.chess-line.right::before {
+  left  : 0;
+  right : 15px;
+  top   : 15px;
+  height: 1px;
+}
+
+.chess-line.right::after {
+  left  : 15px;
+  top   : 0;
+  bottom: 0;
+  width : 1px;
+}
+
+.chess-line.top::before {
+  left  : 0;
+  right : 0;
+  top   : 15px;
+  height: 1px;
+}
+
+.chess-line.top::after {
+  left  : 15px;
+  top   : 15px;
+  bottom: 0;
+  width : 1px;
+}
+
+.chess-line.bottom::before {
+  left  : 0;
+  right : 0;
+  top   : 15px;
+  height: 1px;
+}
+
+.chess-line.bottom::after {
+  left  : 15px;
+  bottom: 15px;
+  width : 1px;
+}
+
+.chess-line.top.left::before {
+  left  : 15px;
+  right : 0;
+  top   : 15px;
+  height: 1px;
+}
+
+.chess-line.top.right::after {
+  left  : 15px;
+  top   : 15px;
+  bottom: 0;
+  width : 1px;
+}
+
+.chess-line.top.right::before {
+  left  : 0;
+  right : 15px;
+  top   : 15px;
+  height: 1px;
+}
+
+.chess-line.top.left::after {
+  left  : 15px;
+  top   : 15px;
+  bottom: 0;
+  width : 1px;
+}
+
+.chess-line.bottom.left::before {
+  left  : 15px;
+  right : 0;
+  top   : 15px;
+  height: 1px;
+}
+
+.chess-line.bottom.left::after {
+  left  : 15px;
+  bottom: 15px;
+  width : 1px;
+}
+
+.chess-line.bottom.right::before {
+  left  : 0;
+  right : 15px;
+  top   : 15px;
+  height: 1px;
+}
+
+.chess-line.bottom.left::after {
+  left  : 15px;
+  bottom: 15px;
+  width : 1px;
+}

@@ -1,33 +1,33 @@
-const path = require('path');
+const path = require("path");
 
 /** Import HTML plugin / 引入HTML插件 */
-const HTMLWebpackPlugin = require('html-webpack-plugin');
+const HTMLWebpackPlugin = require("html-webpack-plugin");
 
 /** Introduce the clean plugin / 引入clean插件 */
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 // const { SourceMapDevToolPlugin } = require('webpack')
 
 const config = {
   /** Specify the packaging method: 'none' | 'development' | 'production' / 指定打包模式 */
-  mode: 'development',
+  mode: "development",
   /** Specify the entry file / 指定入口文件 */
-  entry: './src/index.js',
+  entry: "./src/index.js",
   /** Specify the directory where the package file is located / 指定打包文件所在目录 */
   output: {
     /** Specify the directory of the package file / 指定打包文件的目录 */
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, "dist"),
     /** Packaged file name / 打包后的文件名 */
-    filename: 'bundle.js',
+    filename: "bundle.js",
     environment: {
       /** Not using arrow functions / 不使用箭头函数 */
       // arrowFunction: false,
       /** Do not use const (for compatibility with IE10) / 不使用const（为了兼容IE10） */
       // const: false,
     },
-    publicPath: '',
+    publicPath: "",
   },
-  devtool: 'source-map',
+  devtool: "source-map",
   /** Specify the modules to be used when webpack packs / 指定webpack打包时要用的模块 */
   module: {
     /** Specifies the rules to load / 指定要加载的规则 */
@@ -36,13 +36,13 @@ const config = {
         /** 'test' specifies the file in which the rule takes effect / 'test'指定的是规则生效的文件 */
         test: /\.js$/,
         /** Loader to use / 要使用的loader */
-        use: ['babel-loader', 'source-map-loader'],
+        use: ["babel-loader", "source-map-loader"],
         /** Files to exclude / 要排除的文件 */
         exclude: /node_modules/,
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        use: ["style-loader", "css-loader"],
         exclude: /\.module\.css$/,
       },
       {
@@ -51,39 +51,39 @@ const config = {
           /** Configure babel / 配置babel */
           {
             /** Specified loader / 指定加载器 */
-            loader: 'babel-loader',
+            loader: "babel-loader",
             /** Set up babel / 设置babel */
             options: {
               /** Set up a predefined environment / 设置预定义的环境 */
               presets: [
                 [
                   /** Plugins for specific environments / 指定环境的插件 */
-                  '@babel/preset-env',
+                  "@babel/preset-env",
                   /** Configuration information / 配置信息 */
                   {
                     /** Compatible browser / 要兼容的浏览器 */
                     targets: {
-                      chrome: '88',
+                      chrome: "88",
                     },
                     /** Specify the version of corejs / 指定corejs的版本 */
-                    corejs: '3',
+                    corejs: "3",
                     /** The way to use corejs, 'usage' means loading on demand / 使用corejs的方式，'usage'表示按需加载 */
-                    useBuiltIns: 'usage',
+                    useBuiltIns: "usage",
                   },
                 ],
               ],
             },
           },
-          'ts-loader',
+          "ts-loader",
         ],
         exclude: /node_modules/,
       },
       {
         test: /\.css$/,
         use: [
-          'style-loader',
+          "style-loader",
           {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: {
               importLoaders: 1,
               modules: true,
@@ -96,10 +96,10 @@ const config = {
   },
   /** Set which files can be used to reference modules / 设置哪些文件可以用于引用模块 */
   resolve: {
-    extensions: ['', '.js', '.jsx', '.ts', '.tsx', '.webpack.js', '.web.js'],
+    extensions: ["", ".js", ".jsx", ".ts", ".tsx", ".webpack.js", ".web.js"],
     alias: {
-      '@': path.resolve(__dirname, './src'),
-      '@components': path.resolve(__dirname, './src/components'),
+      "@": path.resolve(__dirname, "./src"),
+      "@components": path.resolve(__dirname, "./src/components"),
       // '@scss': path.resolve(__dirname, './src/scss'),
       // '@utils': path.resolve(__dirname, './src/utils'),
       // '@data': path.resolve(__dirname, './src/data'),
@@ -109,11 +109,11 @@ const config = {
   plugins: [
     new CleanWebpackPlugin(),
     new HTMLWebpackPlugin({
-      // title: 'Item List',
+      // title: "Go - JavaScript",
       /** Configure the generated HTML file name / 配置生成的HTML文件名称 */
-      // filename: './dist/index.html',
+      // filename: "./index.html",
       /** Template files required to generate HTML files / 生成HTML文件所需要的模板文件 */
-      template: path.resolve(__dirname, 'public', 'index.html'),
+      template: path.resolve(__dirname, "public", "index.html"),
       minify: {
         /** Remove comments in HTML files after packaging / 打包后移除HTML文件中的注释 */
         removeComments: true,
