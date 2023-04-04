@@ -14,7 +14,8 @@ const boardSize = 19;
 const board = [];
 /** 获取棋盘DOM */
 // TODO: { Challenge 1 } 获取棋盘DOM
-
+const boardElement = document.getElementById("board");
+    console.log(boardElement); 
 /**
  * @name: 绘制棋盘
  * @return {void}
@@ -28,7 +29,8 @@ const createBoard = () => {
 
       _div.id = "location-" + i + "-" + j;
       /** 增加单元格 */
-      // TODO: { Challenge 2 } 增加单元格
+      // TODO: { Challenge 2 } 
+      boardElement.appendChild(_div);
 
       if (i === 0) {
         _div.className += " top";
