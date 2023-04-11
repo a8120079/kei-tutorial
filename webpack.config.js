@@ -12,7 +12,7 @@ const config = {
   /** Specify the packaging method: 'none' | 'development' | 'production' / 指定打包模式 */
   mode: "development",
   /** Specify the entry file / 指定入口文件 */
-  entry: "./src/index.js",
+  entry: "./src/index.ts",
   /** Specify the directory where the package file is located / 指定打包文件所在目录 */
   output: {
     /** Specify the directory of the package file / 指定打包文件的目录 */
@@ -99,7 +99,7 @@ const config = {
     extensions: ["", ".js", ".jsx", ".ts", ".tsx", ".webpack.js", ".web.js"],
     alias: {
       "@": path.resolve(__dirname, "./src"),
-      "@components": path.resolve(__dirname, "./src/components"),
+      // "@components": path.resolve(__dirname, "./src/components"),
       // '@scss': path.resolve(__dirname, './src/scss'),
       // '@utils': path.resolve(__dirname, './src/utils'),
       // '@data': path.resolve(__dirname, './src/data'),
