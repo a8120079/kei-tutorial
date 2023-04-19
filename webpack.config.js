@@ -12,7 +12,7 @@ const config = {
   /** Specify the packaging method: 'none' | 'development' | 'production' / 指定打包模式 */
   mode: "development",
   /** Specify the entry file / 指定入口文件 */
-  entry: "./src/index.ts",
+  entry: "./src/index.js",
   /** Specify the directory where the package file is located / 指定打包文件所在目录 */
   output: {
     /** Specify the directory of the package file / 指定打包文件的目录 */
@@ -45,39 +45,39 @@ const config = {
         use: ["style-loader", "css-loader"],
         exclude: /\.module\.css$/,
       },
-      {
-        test: /\.ts(x)?$/,
-        use: [
-          /** Configure babel / 配置babel */
-          {
-            /** Specified loader / 指定加载器 */
-            loader: "babel-loader",
-            /** Set up babel / 设置babel */
-            options: {
-              /** Set up a predefined environment / 设置预定义的环境 */
-              presets: [
-                [
-                  /** Plugins for specific environments / 指定环境的插件 */
-                  "@babel/preset-env",
-                  /** Configuration information / 配置信息 */
-                  {
-                    /** Compatible browser / 要兼容的浏览器 */
-                    targets: {
-                      chrome: "88",
-                    },
-                    /** Specify the version of corejs / 指定corejs的版本 */
-                    corejs: "3",
-                    /** The way to use corejs, 'usage' means loading on demand / 使用corejs的方式，'usage'表示按需加载 */
-                    useBuiltIns: "usage",
-                  },
-                ],
-              ],
-            },
-          },
-          "ts-loader",
-        ],
-        exclude: /node_modules/,
-      },
+      // {
+      //   test: /\.ts(x)?$/,
+      //   use: [
+      //     /** Configure babel / 配置babel */
+      //     {
+      //       /** Specified loader / 指定加载器 */
+      //       loader: "babel-loader",
+      //       /** Set up babel / 设置babel */
+      //       options: {
+      //         /** Set up a predefined environment / 设置预定义的环境 */
+      //         presets: [
+      //           [
+      //             /** Plugins for specific environments / 指定环境的插件 */
+      //             "@babel/preset-env",
+      //             /** Configuration information / 配置信息 */
+      //             {
+      //               /** Compatible browser / 要兼容的浏览器 */
+      //               targets: {
+      //                 chrome: "88",
+      //               },
+      //               /** Specify the version of corejs / 指定corejs的版本 */
+      //               corejs: "3",
+      //               /** The way to use corejs, 'usage' means loading on demand / 使用corejs的方式，'usage'表示按需加载 */
+      //               useBuiltIns: "usage",
+      //             },
+      //           ],
+      //         ],
+      //       },
+      //     },
+      //     "ts-loader",
+      //   ],
+      //   exclude: /node_modules/,
+      // },
       {
         test: /\.css$/,
         use: [
@@ -96,7 +96,15 @@ const config = {
   },
   /** Set which files can be used to reference modules / 设置哪些文件可以用于引用模块 */
   resolve: {
-    extensions: ["", ".js", ".jsx", ".ts", ".tsx", ".webpack.js", ".web.js"],
+    extensions: [
+      "",
+      ".js",
+      ".jsx",
+      // ".ts",
+      // ".tsx",
+      ".webpack.js",
+      ".web.js"
+    ],
     alias: {
       "@": path.resolve(__dirname, "./src"),
       // "@components": path.resolve(__dirname, "./src/components"),

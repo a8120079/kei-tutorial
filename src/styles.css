@@ -165,3 +165,26 @@ header {
   bottom: 15px;
   width : 1px;
 }
+
+.chess {
+  width        : 30px;
+  height       : 30px;
+  border-radius: 50%;
+}
+
+.chess::before {
+  content: none;
+}
+
+.chess::after {
+  content: none;
+}
+
+.black {
+  background-color: #000;
+}
+
+.white {
+  background-color: #fff;
+  border          : 1px solid #000;
+}

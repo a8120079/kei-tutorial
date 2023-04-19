@@ -1,28 +1,28 @@
 /*
  * @Author: fantiga
  * @Date: 2023-04-04 20:42:07
- * @LastEditTime: 2023-04-11 21:35:41
+ * @LastEditTime: 2023-04-19 21:36:22
  * @LastEditors: fantiga
- * @FilePath: /kei-tutorial/src/index.ts
+ * @FilePath: /kei-tutorial/src/index.js
  */
 import "./styles.css";
 
 /** 棋盘尺寸 */
-const boardSize: number = 19;
+const boardSize = 19;
 /** 初始化游戏对象数组 */
-const board: number[][] = [];
+const board = [];
 /** 获取棋盘DOM */
-const boardElement: HTMLElement | null = document.getElementById("board");
+const boardElement = document.getElementById("board");
 
 /**
  * @name: 绘制棋盘
  * @returns {void}
  */
-const createBoard = (): void => {
+const createBoard = () => {
   for (let i = 0; i < boardSize; i++) {
     board[i] = [];
     for (let j = 0; j < boardSize; j++) {
-      const _div: HTMLDivElement = document.createElement("div");
+      const _div = document.createElement("div");
       _div.className = "chess-line";
 
       _div.id = "location-" + i + "-" + j;

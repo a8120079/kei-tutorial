@@ -24,9 +24,7 @@
     ]
   },
   "dependencies": {
-    "@babel/preset-typescript": "latest",
     "portfinder": "latest",
-    "ts-loader": "latest",
     "web-vitals": "latest",
     "webpack": "latest",
     "webpack-dev-server": "latest"
@@ -34,8 +32,6 @@
   "devDependencies": {
     "@babel/core": "latest",
     "@babel/preset-env": "latest",
-    "@typescript-eslint/eslint-plugin": "latest",
-    "@typescript-eslint/parser": "latest",
     "autoprefixer": "latest",
     "babel-loader": "latest",
     "clean-webpack-plugin": "latest",
@@ -53,7 +49,6 @@
     "prettier": "latest",
     "source-map-loader": "latest",
     "style-loader": "latest",
-    "typescript": "^5.0.4",
     "webpack": "latest",
     "webpack-cli": "latest",
     "webpack-merge": "latest"
