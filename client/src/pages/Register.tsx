@@ -7,27 +7,51 @@
  */
 
 import Head from "@/components/Head";
-import { Grid } from "@mui/material";
+import { Button, Grid, TextField } from "@mui/material";
 import { FC } from "react";
 
 const Register: FC = () => {
   return (
     <>
       <Head />
-      <Grid container>
+      <Grid container spacing={1} sx={{ width: "100%", padding: "6px" }}>
         <Grid item>
-          <p>名前(ふりがな)</p>
-          <input type="text" />
-          <p>メールアドレス</p>
-          <input type="text" />
-          <p>パスワード</p>
-          <input type="password" />
-          <p>パスワード再入力</p>
-          <input type="password" />
-          <p>
-            <input type="submit" value="会員登録を行う" />
-            <button className="btn">ログインを行う</button>
-          </p>
+          <TextField id="outlined-basic" label="名前(ふりがな)" variant="outlined" />
+        </Grid>
+      </Grid>
+      <Grid container spacing={1} sx={{ width: "100%", padding: "6px" }}>
+        <Grid item>
+          <TextField id="outlined-basic" label="メールアドレス" variant="outlined" />
+        </Grid>
+      </Grid>
+      <Grid container spacing={1} sx={{ width: "100%", padding: "6px" }}>
+        <Grid item>
+          <TextField
+            id="outlined-password-input"
+            label="パスワード"
+            type="password"
+            autoComplete="current-password"
+          />
+        </Grid>
+      </Grid>
+      <Grid container spacing={1} sx={{ width: "100%", padding: "6px" }}>
+        <Grid item>
+          <TextField
+            id="outlined-password-input"
+            label="パスワード再入力"
+            type="password"
+            autoComplete="current-password"
+          />
+        </Grid>
+      </Grid>
+      <Grid container spacing={1} sx={{ width: "100%", padding: "6px" }}>
+        <Grid item>
+          <Button variant="outlined">会員登録を行う</Button>
+        </Grid>
+      </Grid>
+      <Grid container spacing={1} sx={{ width: "100%", padding: "6px" }}>
+        <Grid item>
+          <Button variant="outlined">ログインを行う</Button>
         </Grid>
       </Grid>
     </>

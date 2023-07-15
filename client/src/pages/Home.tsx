@@ -7,30 +7,54 @@
  */
 
 import Head from "@/components/Head";
-import { Grid } from "@mui/material";
+import { Button, Grid, TextField } from "@mui/material";
+import styled from '@emotion/styled';
 import { FC } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+
+const FormUI = styled.form`
+  width: "100%"
+`;
+
+interface LoginFormValues {
+  userName: string;
+  passWord: string;
+}
 
 const Home: FC = () => {
-  const form = useForm();
+  const form = useForm<LoginFormValues>();
 
-  const onSubmit = (data: any) => console.log(data);
+  const onValid: SubmitHandler<LoginFormValues> = (data) => {
+    console.log(data);
+  };
 
   return (
     <>
       <Head />
       <FormProvider {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <Grid container>
+        <FormUI onSubmit={form.handleSubmit(onValid)}>
+          <Grid container spacing={1} sx={{ width: "100%", padding: "6px" }}>
             <Grid item>
-              <p>名前(ふりがな)</p>
-              <input type="text" />
-              <p>パスワード</p>
-              <input type="password" />
-              <p><button className="btn" >ログイン</button></p>
+              <TextField name="userName" id="outlined-basic" label="名前(ふりがな)" variant="outlined" />
             </Grid>
           </Grid>
-        </form>
+          <Grid container spacing={1} sx={{ width: "100%", padding: "6px" }}>
+            <Grid item>
+              <TextField
+                name="passWord"
+                id="outlined-password-input"
+                label="Password"
+                type="password"
+                autoComplete="current-password"
+              />
+            </Grid>
+          </Grid>
+          <Grid container spacing={1} sx={{ width: "100%", padding: "6px" }}>
+            <Grid item>
+              <Button variant="outlined" type="submit">ログイン</Button>
+            </Grid>
+          </Grid>
+        </FormUI>
       </FormProvider>
     </>
   );

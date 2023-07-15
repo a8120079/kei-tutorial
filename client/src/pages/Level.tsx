@@ -7,7 +7,7 @@
  */
 
 import Head from "@/components/Head";
-import { Grid } from "@mui/material";
+import { Grid, Link } from "@mui/material";
 import { FC } from "react";
 
 const Level: FC = () => {
@@ -16,13 +16,20 @@ const Level: FC = () => {
       <Head />
       <Grid container>
         <Grid item>
-          <ul>
-            <li><a href="#" >入門レベル</a></li>
-            <li><a href="#">初級レベル</a></li>
-            <li><a href="#" >中級レベル</a></li>
-          </ul>
+          <Link href="#">入門レベル</Link>
         </Grid>
       </Grid>
+      <Grid container>
+        <Grid item>
+          <Link href="#">初級レベル</Link>
+        </Grid>
+      </Grid>
+      <Grid container>
+        <Grid item>
+          <Link href="#">中級レベル</Link>
+        </Grid>
+      </Grid>
+
     </>
   );
 };
