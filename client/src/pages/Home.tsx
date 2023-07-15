@@ -55,7 +55,7 @@ const Home: FC = () => {
           </Grid>
           <Grid container justifyContent="center" spacing={1} sx={{ padding: "6px" }}>
             <Grid item>
-              <Button variant="outlined">ログイン</Button>
+              <Button variant="contained" type="submit" >ログイン</Button>
             </Grid>
           </Grid>
           <Grid container justifyContent="center" spacing={1} sx={{ padding: "6px" }}>
