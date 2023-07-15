@@ -1,7 +1,7 @@
 /*
  * @Author: fantiga
  * @Date: 2023-07-15 11:46:25
- * @LastEditTime: 2023-07-15 15:53:41
+ * @LastEditTime: 2023-07-15 16:05:13
  * @LastEditors: fantiga
  * @FilePath: /kei-tutorial/client/src/pages/Home.tsx
  */
@@ -33,12 +33,10 @@ const Home: FC = () => {
       <Head />
       <FormProvider {...form}>
         <FormUI onSubmit={handleSubmit(onValid, onInvalid)}>
-          <Grid container spacing={1} sx={{ width: "100%", padding: "6px" }}>
+          <Grid container justifyContent="center" spacing={1} sx={{ padding: "6px" }}>
             <Grid item>
               <TextField {...register("userName")} label="名前(ふりがな)" variant="outlined" />
             </Grid>
-          </Grid>
-          <Grid container spacing={1} sx={{ width: "100%", padding: "6px" }}>
             <Grid item>
               <TextField
                 {...register("passWord")}
@@ -48,7 +46,7 @@ const Home: FC = () => {
               />
             </Grid>
           </Grid>
-          <Grid container spacing={1} sx={{ width: "100%", padding: "6px" }}>
+          <Grid container justifyContent="center" spacing={1} sx={{ padding: "6px" }}>
             <Grid item>
               <Button variant="outlined" type="submit">ログイン</Button>
             </Grid>
