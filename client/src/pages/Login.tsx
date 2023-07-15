@@ -14,7 +14,25 @@ const Login: FC = () => {
     <>
       <Head />
       <>
-        Login
+        <main>
+          <div id="input_form">
+            <form action="index.php" method="POST">
+              <p>名前(ふりがな)</p>
+              <input type="text" />
+              <p>メールアドレス</p>
+              <input type="text" />
+              <p>パスワード</p>
+              <input type="password" />
+              <p>パスワード再入力</p>
+              <input type="password" />
+              <p>
+                <input type="submit" value="会員登録を行う" />
+                <button className="btn">ログインを行う</button>
+              </p>
+            </form>
+          </div>
+        </main>
+
       </>
     </>
   );
