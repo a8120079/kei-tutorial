@@ -7,10 +7,16 @@
  */
 
 import Head from "@/components/Head";
-import { Button, Grid, TextField } from "@mui/material";
+import { Button, Grid, Link, TextField } from "@mui/material";
 import styled from '@emotion/styled';
 import { FC } from "react";
 import { FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
+import { createRoot } from 'react-dom/client';
+// import { Route, Routes } from "react-router";
+// import Register from "./Register";
+import { useNavigate } from "react-router-dom";
+
+
 
 const FormUI = styled.form`
   width: "100%";
@@ -22,6 +28,7 @@ interface LoginFormValues {
 }
 
 const Home: FC = () => {
+  const navigate = useNavigate();
   const form = useForm<LoginFormValues>();
   const { register, handleSubmit } = form;
 
@@ -48,7 +55,12 @@ const Home: FC = () => {
           </Grid>
           <Grid container justifyContent="center" spacing={1} sx={{ padding: "6px" }}>
             <Grid item>
-              <Button variant="outlined" type="submit">ログイン</Button>
+              <Button variant="outlined">ログイン</Button>
+            </Grid>
+          </Grid>
+          <Grid container justifyContent="center" spacing={1} sx={{ padding: "6px" }}>
+            <Grid item>
+              <Button onClick={() => navigate('/register')} variant="outlined" >ユーザー登録</Button>
             </Grid>
           </Grid>
         </FormUI>
