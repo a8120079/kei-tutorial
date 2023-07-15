@@ -14,7 +14,18 @@ const Home: FC = () => {
     <>
       <Head />
       <>
-        Home
+        <main>
+          <div id="input_form">
+            <form action="index.php" method="POST">
+              <p>名前(ふりがな)</p>
+              <input type="text" />
+              <p>パスワード</p>
+              <input type="password" />
+              <p><button className="btn" >ログイン</button></p>
+            </form>
+          </div>
+        </main>
+
       </>
     </>
   );
