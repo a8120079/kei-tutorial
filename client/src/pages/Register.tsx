@@ -1,20 +1,15 @@
 /*
  * @Author: fantiga
  * @Date: 1013-07-15 11:50:44
- * @LastEditTime: 1013-07-15 13:59:35
+ * @LastEditTime: 2023-07-15 17:51:36
  * @LastEditors: fantiga
  * @FilePath: /kei-tutorial/client/src/pages/Register.tsx
  */
 
 import Head from "@/components/Head";
 import { Button, Grid, TextField } from "@mui/material";
-import styled from '@emotion/styled';
 import { FC } from "react";
 import { FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
-
-const FormUI = styled.form`
-  width: "100%";
-`;
 
 interface RegisterFormValues {
   userName: string;
@@ -34,7 +29,7 @@ const Register: FC = () => {
     <>
       <Head />
       <FormProvider {...form}>
-        <FormUI onSubmit={handleSubmit(onValid, onInvalid)}>
+        <form onSubmit={handleSubmit(onValid, onInvalid)}>
           <Grid container justifyContent="center" spacing={1} sx={{ padding: "6px" }}>
             <Grid item>
               <TextField {...register("userName")} label="名前(ふりがな)" variant="outlined" />
@@ -67,9 +62,10 @@ const Register: FC = () => {
               <Button variant="contained" type="submit">ログイン</Button>
             </Grid>
           </Grid>
-        </FormUI>
+        </form>
       </FormProvider>
     </>
   );
 };
+
 export default Register;

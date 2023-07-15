@@ -1,7 +1,7 @@
 /*
  * @Author: fantiga
  * @Date: 2023-07-15 11:48:30
- * @LastEditTime: 2023-07-15 13:58:34
+ * @LastEditTime: 2023-07-15 17:49:44
  * @LastEditors: fantiga
  * @FilePath: /kei-tutorial/client/src/pages/Game.tsx
  */
@@ -110,4 +110,5 @@ const Game: FC = () => {
     </>
   );
 };
+
 export default Game;
