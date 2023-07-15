@@ -1,15 +1,15 @@
 /*
  * @Author: fantiga
  * @Date: 2023-07-15 12:50:44
- * @LastEditTime: 2023-07-15 12:53:21
+ * @LastEditTime: 2023-07-15 13:25:13
  * @LastEditors: fantiga
- * @FilePath: /kei-tutorial/client/src/pages/Login.tsx
+ * @FilePath: /kei-tutorial/client/src/pages/Register.tsx
  */
 
 import Head from "@/components/Head";
 import { FC } from "react";
 
-const Login: FC = () => {
+const Register: FC = () => {
   return (
     <>
       <Head />
@@ -37,4 +37,4 @@ const Login: FC = () => {
     </>
   );
 };
-export default Login;
+export default Register;

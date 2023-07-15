@@ -1,7 +1,7 @@
 /*
  * @Author: fantiga
  * @Date: 2023-07-15 11:42:23
- * @LastEditTime: 2023-07-15 12:50:37
+ * @LastEditTime: 2023-07-15 13:25:22
  * @LastEditors: fantiga
  * @FilePath: /kei-tutorial/client/src/index.tsx
  */
@@ -12,7 +12,7 @@ import { createRoot } from 'react-dom/client';
 import Home from './pages/Home';
 import Game from './pages/Game';
 import Level from './pages/Level';
-import Login from './pages/Login';
+import Register from './pages/Register';
 
 /**
  * React 18 新写法
@@ -27,7 +27,7 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/level" element={<Level />} />
         <Route path="/game" element={<Game />} />
         <Route
