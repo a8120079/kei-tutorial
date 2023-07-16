@@ -100,7 +100,7 @@ const Game: FC = () => {
   return (
     <>
       <Head />
-      <Grid container>
+      <Grid container justifyContent="center" spacing={1} sx={{ padding: "6px" }}>
         <Grid item>
           <div id="board">
             Game

@@ -14,17 +14,17 @@ const Level: FC = () => {
   return (
     <>
       <Head />
-      <Grid container>
+      <Grid container justifyContent="center" spacing={1} sx={{ padding: "6px" }}>
         <Grid item>
           <Link href="#">入門レベル</Link>
         </Grid>
       </Grid>
-      <Grid container>
+      <Grid container justifyContent="center" spacing={1} sx={{ padding: "6px" }}>
         <Grid item>
           <Link href="#">初級レベル</Link>
         </Grid>
       </Grid>
-      <Grid container>
+      <Grid container justifyContent="center" spacing={1} sx={{ padding: "6px" }}>
         <Grid item>
           <Link href="#">中級レベル</Link>
         </Grid>
