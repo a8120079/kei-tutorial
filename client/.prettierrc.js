@@ -27,3 +27,4 @@ module.exports = {
   endOfLine: 'lf',
   embeddedLanguageFormatting: 'auto',
 };
+
