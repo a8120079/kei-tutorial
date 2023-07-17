@@ -10,7 +10,6 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 // const { SourceMapDevToolPlugin } = require('webpack')
 
 const config = {
-  
   /** Specify the packaging method: 'none' | 'development' | 'production' / 指定打包模式 */
   mode: "development",
   devServer: {
@@ -33,7 +32,6 @@ const config = {
     publicPath: "",
   },
   devtool: "source-map",
-  
   /** Specify the modules to be used when webpack packs / 指定webpack打包时要用的模块 */
   module: {
     /** Specifies the rules to load / 指定要加载的规则 */
@@ -100,7 +98,6 @@ const config = {
       },
     ],
   },
-  
   /** Set which files can be used to reference modules / 设置哪些文件可以用于引用模块 */
   resolve: {
     extensions: [
