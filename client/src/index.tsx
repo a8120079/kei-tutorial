@@ -13,6 +13,7 @@ import Home from './pages/Home';
 import Game from './pages/Game';
 import Level from './pages/Level';
 import Register from './pages/Register';
+import './styles/styles.css';
 
 /**
  * React 18 新写法
