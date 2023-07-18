@@ -13,6 +13,8 @@ import Home from './pages/Home';
 import Game from './pages/Game';
 import Level from './pages/Level';
 import Register from './pages/Register';
+import Result from './pages/Result';
+
 import './styles/styles.css';
 
 /**
@@ -31,6 +33,8 @@ root.render(
         <Route path="/register" element={<Register />} />
         <Route path="/level" element={<Level />} />
         <Route path="/game" element={<Game />} />
+        <Route path="/result" element={<Result />} />
+
         <Route
           path="*"
           element={
