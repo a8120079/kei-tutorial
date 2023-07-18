@@ -1,7 +1,7 @@
 """
 Author: fantiga
-Date: 2023-07-17 21:40:56
-LastEditTime: 2023-07-17 21:40:56
+Date: 2023-07-18 22:53:28
+LastEditTime: 2023-07-18 23:49:10
 LastEditors: fantiga
 FilePath: /kei-tutorial/server/main.py
 """
@@ -17,7 +17,8 @@ from flask_cors import CORS
 from server.utils.db import Db
 from fastapi import FastAPI, Request, Form, Cookie, UploadFile
 from fastapi.responses import RedirectResponse
-from fastapi.templating import Jinja2Templates
+
+# from fastapi.templating import Jinja2Templates
 from starlette.status import HTTP_302_FOUND
 from fastapi.staticfiles import StaticFiles
 from app.configs import Config
@@ -26,13 +27,13 @@ from app.utilities.save_image import save_image
 from app.models.auth import AuthModel
 from app.models.articles import ArticleModel
 from app.utilities.check_login import check_login
-app = Flask(__name__)
 
+app = Flask(__name__)
 
 
 app = FastAPI()
 app.mount("/app/statics", StaticFiles(directory="app/statics"), name="static")
-templates = Jinja2Templates(directory="/app/templates")
+# templates = Jinja2Templates(directory="/app/templates")
 config = Config()
 session = Session(config)
 
@@ -49,9 +50,9 @@ def login(request: Request, username: str = Form(...), password: str = Form(...)
     """
     auth_model = AuthModel(config)
     [result, user] = auth_model.login(username, password)
-    if not result:
-        # ユーザが存在しなければトップページへ戻す
-        return templates.TemplateResponse("index.html", {"request": request, "error": "ユーザ名またはパスワードが間違っています"})
+    # if not result:
+    # ユーザが存在しなければトップページへ戻す
+    # return templates.TemplateResponse("index.html", {"request": request, "error": "ユーザ名またはパスワードが間違っています"})
     response = RedirectResponse("/articles", status_code=HTTP_302_FOUND)
     session_id = session.set("user", user)
     response.set_cookie("session_id", session_id)
@@ -59,7 +60,13 @@ def login(request: Request, username: str = Form(...), password: str = Form(...)
 
 
 @app.route(r"/register", methods=["POST"])
-def register(request: Request, username: str = Form(...), mail_adsress: str = Form(...), password: str = Form(...), rePassword: str = Form(...)):
+def register(
+    request: Request,
+    username: str = Form(...),
+    mail_adsress: str = Form(...),
+    password: str = Form(...),
+    rePassword: str = Form(...),
+):
     """
     注册
     """
