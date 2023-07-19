@@ -73,9 +73,9 @@ const Game: FC = () => {
   // 交差線を表示する関数
   // const drawLines = () => {
   //   const board = document.getElementById("board")!;
-  //   // Get left, top offset of the element
-  //   // const boardLeft = board.offsetLeft;
-  //   // const boardTop = board.offsetTop;
+    // Get left, top offset of the element
+    // const boardLeft = board.offsetLeft;
+    // const boardTop = board.offsetTop;
 
   //   for (let i = 0; i < boardSize; i++) {
   //     for (let j = 0; j < boardSize; j++) {
@@ -268,3 +268,4 @@ const Game: FC = () => {
 };
 
 export default Game;
+
