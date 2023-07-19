@@ -1,14 +1,14 @@
 /*
  * @Author: fantiga
  * @Date: 1013-07-15 11:50:44
- * @LastEditTime: 2023-07-18 23:46:23
+ * @LastEditTime: 2023-07-19 22:55:20
  * @LastEditors: fantiga
  * @FilePath: /kei-tutorial/client/src/pages/Result.tsx
  */
 
 import Head from "@/components/Head";
 import { Grid } from "@mui/material";
-import { GridColDef, GridValueGetterParams, DataGrid } from "@mui/x-data-grid";
+import { GridColDef, DataGrid } from "@mui/x-data-grid";
 import { FC } from "react";
 
 const columns: GridColDef[] = [
@@ -17,29 +17,22 @@ const columns: GridColDef[] = [
     field: "username",
     headerName: "username",
     width: 110,
-    editable: true,
   },
   {
     field: "level",
     headerName: "level",
     type: "number",
     width: 110,
-    editable: true,
   },
   {
     field: "correct",
     headerName: "correct",
     width: 110,
-    editable: true,
   },
   {
     field: "time",
     headerName: "time",
-    description: "This column has a value getter and is not sortable.",
-    sortable: false,
     width: 160,
-    valueGetter: (params: GridValueGetterParams) =>
-      `${params.row.firstName || ""} ${params.row.lastName || ""}`,
   },
 ];
 
