@@ -26,6 +26,7 @@
   "dependencies": {
     "@emotion/react": "latest",
     "@emotion/styled": "latest",
+    "@mui/icons-material": "^5.14.1",
     "@mui/material": "latest",
     "@mui/x-data-grid": "latest",
     "mui": "latest",

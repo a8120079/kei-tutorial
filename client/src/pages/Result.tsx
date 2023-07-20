@@ -11,6 +11,10 @@ import { Grid } from "@mui/material";
 import { GridColDef, DataGrid } from "@mui/x-data-grid";
 import { FC } from "react";
 
+/**
+ * 
+ */
+
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 90 },
   {
@@ -30,8 +34,8 @@ const columns: GridColDef[] = [
   },
   {
     field: "createTime",
-    headerName: "打ったタイム",
-    width: 160,
+    headerName: "打ったタイミング",
+    width: 180,
   },
 ];
 
@@ -45,6 +49,12 @@ const rows = [
   { id: 7, userName: "Clifford", level: "入門", correct: "正解"  , createTime: "11/08/2023 11:02:23" },
   { id: 8, userName: "Frances", level: "入門", correct: "正解" , createTime: "11/08/2023 11:02:23"  },
   { id: 9, userName: "Roxie", level: "入門", correct: "正解" , createTime: "11/08/2023 11:02:23"  },
+  { id: 10, userName: "Roxie", level: "入門", correct: "正解" , createTime: "11/08/2023 11:02:23"  },
+  { id: 11, userName: "Roxie", level: "入門", correct: "正解" , createTime: "11/08/2023 11:02:23"  },
+  { id: 12, userName: "Roxie", level: "入門", correct: "正解" , createTime: "11/08/2023 11:02:23"  },
+  { id: 13, userName: "Roxie", level: "入門", correct: "正解" , createTime: "11/08/2023 11:02:23"  },
+  { id: 14, userName: "Roxie", level: "入門", correct: "正解" , createTime: "11/08/2023 11:02:23"  },
+  { id: 15, userName: "Roxie", level: "入門", correct: "正解" , createTime: "11/08/2023 11:02:23"  },
 ];
 
 const Result: FC = () => {

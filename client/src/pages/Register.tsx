@@ -11,6 +11,8 @@ import { Button, Grid, TextField } from "@mui/material";
 import { FC } from "react";
 import { FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
 
+
+// define the style of RegisterFormValues
 interface RegisterFormValues {
   userName: string;
   mailAddress: string;

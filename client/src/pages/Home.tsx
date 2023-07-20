@@ -12,6 +12,7 @@ import { FC } from "react";
 import { FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
+// 定义LoginFormValues的形式
 interface LoginFormValues {
   userName: string;
   passWord: string;
@@ -45,7 +46,7 @@ const Home: FC = () => {
           </Grid>
           <Grid container justifyContent="center" spacing={1} sx={{ padding: "6px" }}>
             <Grid item>
-              <Button variant="contained" type="submit">ログイン</Button>
+              <Button variant="contained" >ログイン</Button>
             </Grid>
           </Grid>
           <Grid container justifyContent="center" spacing={1} sx={{ padding: "6px" }}>
