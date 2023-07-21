@@ -1,21 +1,13 @@
 /*
  * @Author: fantiga
  * @Date: 2023-07-15 11:42:23
- * @LastEditTime: 2023-07-15 13:25:22
+ * @LastEditTime: 2023-07-21 23:57:28
  * @LastEditors: fantiga
  * @FilePath: /kei-tutorial/client/src/index.tsx
  */
 
-import React from 'react';
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
-import Home from './pages/Home';
-import Game from './pages/Game';
-import Level from './pages/Level';
-import Register from './pages/Register';
-import Result from './pages/Result';
-
-import './styles/styles.css';
+import App from './App';
 
 /**
  * React 18 新写法
@@ -25,25 +17,4 @@ const container: HTMLElement =
 // 创建一个root。
 const root = createRoot(container);
 // 初始渲染：将一个元素渲染到root。
-root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/level" element={<Level />} />
-        <Route path="/game" element={<Game />} />
-        <Route path="/result" element={<Result />} />
-
-        <Route
-          path="*"
-          element={
-            <main style={{ padding: '1rem' }}>
-              <p>There&apos;s nothing here!</p>
-            </main>
-          }
-        />
-      </Routes>
-    </BrowserRouter>
-  </React.StrictMode>
-);
+root.render(<App />);
