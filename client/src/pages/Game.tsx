@@ -2,6 +2,11 @@ import Head from "@/components/Head";
 import { Button, Grid } from "@mui/material";
 import { FC, useCallback, useEffect, useState } from "react";
 
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+import Stack from '@mui/material/Stack';
+
+
 // 定义IBoardElements的形式
 interface IBoardElements {
   x: number;
@@ -50,12 +55,26 @@ const Game: FC = () => {
 
   const checkAnswer = useCallback((row: number, col: number) => {
     if (row === 1 && col === 0) {
-      setIsCorrect(true);
+      setTimeout(() => {
+        alert("Correct!");
+      }, 1000);
     } else {
-      setIsCorrect(false);
+      setTimeout(() => {
+        alert("Incorrect!");
+      }, 1000);
     }
   }, []);
 
+  // <Stack sx={{ width: '100%' }} spacing={2}>
+  //   <Alert severity="error">
+  //     <AlertTitle>Error</AlertTitle>
+  //     不正解 — <strong>check it out!</strong>
+  //   </Alert>
+  //   <Alert severity="success">
+  //       <AlertTitle>Success</AlertTitle>
+  //       This is a success alert — <strong>check it out!</strong>
+  //     </Alert>
+  //   </Stack>
   /**
    * 放棋子的方程
    *
@@ -68,10 +87,13 @@ const Game: FC = () => {
       newBoardState[row][col] = currentPlayer;
       setBoardState(newBoardState);
       setCurrentPlayer(currentPlayer === 1 ? 2 : 1);
+      setIsCorrect(isCorrect);
       checkAnswer(row, col);
     }
     console.log(row, col);
   }, [boardState, currentPlayer]);
+
+  
 
   // const checkAnswer = (row: number, col: number) => {
   //   if (row === 1 && col === 0) {
@@ -167,9 +189,18 @@ const Game: FC = () => {
 
   }, [boardState, currentPlayer]);
 
-  useEffect(() => {
-    isCorrect !== null && alert(isCorrect ? "Correct!" : "Incorrect!");
-  }, [isCorrect]);
+  // useEffect(() => {
+  //   isCorrect !== null && alert(isCorrect ? "Correct!" : "Incorrect!");
+  // }, [isCorrect]);
+  //   <Stack sx={{ width: '100%' }} spacing={2}>
+  //     <Alert severity={isCorrect ? "success" : "error"}>
+  //       <AlertTitle>{isCorrect ? "Success" : "Error"}</AlertTitle>
+  //       {isCorrect ? "This is a success alert" : "正解"} — <strong>check it out!</strong>
+  //     </Alert>
+  //   </Stack>
+  
+  
+  
 
   return (
     <>
@@ -211,6 +242,5 @@ const Game: FC = () => {
     // checkAnswer();
   );
 };
-
 
 export default Game;
