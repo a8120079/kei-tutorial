@@ -1,7 +1,7 @@
 /*
  * @Author: fantiga
  * @Date: 1013-07-15 11:50:44
- * @LastEditTime: 2023-07-22 23:09:08
+ * @LastEditTime: 2023-07-22 23:45:07
  * @LastEditors: fantiga
  * @FilePath: /kei-tutorial/client/src/pages/Register.tsx
  */
@@ -15,7 +15,7 @@ import { FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from "react-
 
 const Register: FC = () => {
   const form = useForm<RegisterFormValues>();
-  const { register, handleSubmit, control } = form;
+  const { register, handleSubmit, control, formState: { errors } } = form;
 
   const onValid: SubmitHandler<RegisterFormValues> = data => console.log(data);
   const onInvalid: SubmitErrorHandler<RegisterFormValues> = errors => console.error(errors);
@@ -65,6 +65,11 @@ const Register: FC = () => {
           </Grid>
         </form>
       </FormProvider>
+      <Grid container justifyContent="center" spacing={1} sx={{ padding: "6px" }}>
+        <Grid item>
+          {errors.userName && (<>{errors.userName.message}</>)}
+        </Grid>
+      </Grid>
     </>
   );
 };
