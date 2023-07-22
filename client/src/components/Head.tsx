@@ -10,9 +10,9 @@ import { Link } from "@mui/material";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 const Head: FC = () => {
   const navigate = useNavigate();
+
   return (
     <header>
       <ul>
@@ -25,6 +25,5 @@ const Head: FC = () => {
     </header>
   );
 };
-
 
 export default Head;
