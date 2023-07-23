@@ -1,7 +1,6 @@
 import Head from "@/components/Head";
 import { Button, Grid } from "@mui/material";
 import { FC, useCallback, useEffect, useState } from "react";
-
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Stack from '@mui/material/Stack';
@@ -15,17 +14,19 @@ interface IBoardElements {
   stone: number;
 }
 
+const tempScript: [number, number, boolean][] = [[3, 2, true], [2, 3, true], [2, 5, true], [3, 5, false], [4, 5, false], [4, 4, false], [4, 3, false], [4, 6, false]];
+
 // Declare the boardState to keep track of the stones on the board
 const initialBoardState: number[][] = [
-  [0, 2, 1, 0, 0, 0, 0, 0, 0],
-  [0, 2, 1, 0, 0, 0, 0, 0, 0],
-  [0, 2, 1, 0, 0, 0, 0, 0, 0],
-  [2, 2, 1, 0, 0, 0, 0, 0, 0],
-  [1, 1, 1, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  Array(9).fill(0),
+  Array(9).fill(0),
+  Array(9).fill(0),
+  Array(9).fill(0),
+  Array(9).fill(0),
+  Array(9).fill(0),
+  Array(9).fill(0),
+  Array(9).fill(0),
+  Array(9).fill(0),
 ];
 
 const boardSize = 9;
@@ -33,8 +34,10 @@ const intersectionSize = 30;
 const boardWidth = boardSize * intersectionSize;
 
 const Game: FC = () => {
+  // 棋盘状态
   const [boardState, setBoardState] = useState<number[][]>(initialBoardState);
-  const [currentPlayer, setCurrentPlayer] = useState<number>(1);
+  // 棋子轮替，true=白；false=黑
+  const [currentPlayer, setCurrentPlayer] = useState<boolean>(false);
   const [boardElements, setBoardElements] = useState<IBoardElements[]>([]);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [nextBtnDisabled, setNextBtnDisabled] = useState<boolean>(true);
@@ -50,16 +53,16 @@ const Game: FC = () => {
    * @param row
    * @param col
    */
-  const placeStone = useCallback((row: number, col: number) => {
+  const placeStone = useCallback((row: number, col: number, player: boolean = currentPlayer) => {
     if (boardState[row][col] === 0) {
       const newBoardState = [...boardState];
-      newBoardState[row][col] = currentPlayer;
+      newBoardState[row][col] = player === true ? 2 : 1;
       setBoardState(newBoardState);
-      setCurrentPlayer(currentPlayer === 1 ? 2 : 1);
+      setCurrentPlayer(!player);
       checkAnswer(row, col);
     }
     console.log(row, col);
-  }, [boardState, currentPlayer]);
+  }, [boardState]);
 
   // 在最初的棋盘上画横线和竖线
   useEffect(() => {
@@ -103,15 +106,11 @@ const Game: FC = () => {
 
   }, [boardState, currentPlayer]);
 
-  // useEffect(() => {
-  //   isCorrect !== null && alert(isCorrect ? "Correct!" : "Incorrect!");
-  // }, [isCorrect]);
-  //   <Stack sx={{ width: '100%' }} spacing={2}>
-  //     <Alert severity={isCorrect ? "success" : "error"}>
-  //       <AlertTitle>{isCorrect ? "Success" : "Error"}</AlertTitle>
-  //       {isCorrect ? "This is a success alert" : "正解"} — <strong>check it out!</strong>
-  //     </Alert>
-  //   </Stack>
+  useEffect(() => {
+    for (let i = 0; i < tempScript.length; i++) {
+      placeStone(tempScript[i][0], tempScript[i][1], tempScript[i][2]);
+    }
+  }, []);
 
   return (
     <>
@@ -176,7 +175,6 @@ const Game: FC = () => {
           <></>
       }
     </>
-    // checkAnswer();
   );
 };
 
