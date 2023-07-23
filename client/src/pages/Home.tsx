@@ -6,22 +6,18 @@
  * @FilePath: /kei-tutorial/client/src/pages/Home.tsx
  */
 
+import { LoginFormInputText } from "@/components/FormInputText";
 import Head from "@/components/Head";
+import { LoginFormValues } from "@/types";
 import { Button, Grid, TextField } from "@mui/material";
 import { FC } from "react";
 import { FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-// 定义LoginFormValues的形式
-interface LoginFormValues {
-  userName: string;
-  passWord: string;
-}
-
 const Home: FC = () => {
   const navigate = useNavigate();
   const form = useForm<LoginFormValues>();
-  const { register, handleSubmit } = form;
+  const { register, handleSubmit, control, formState: { errors } } = form;
 
   const onValid: SubmitHandler<LoginFormValues> = data => console.log(data);
   const onInvalid: SubmitErrorHandler<LoginFormValues> = errors => console.error(errors);
@@ -33,8 +29,14 @@ const Home: FC = () => {
         <form onSubmit={handleSubmit(onValid, onInvalid)}>
           <Grid container justifyContent="center" spacing={1} sx={{ padding: "6px" }}>
             <Grid item>
-              <TextField {...register("userName")} label="名前(ふりがな)" variant="outlined" />
+              <LoginFormInputText
+                control={control}
+                name="userName"
+                label="名前(ふりがな)"
+              />
             </Grid>
+          </Grid>
+          <Grid container justifyContent="center" spacing={1} sx={{ padding: "6px" }}>
             <Grid item>
               <TextField
                 {...register("passWord")}

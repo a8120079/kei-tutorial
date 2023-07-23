@@ -6,10 +6,10 @@
  * @FilePath: /kei-tutorial/client/src/pages/Register.tsx
  */
 
-import { FormInputText } from "@/components/FormInputText";
+import { RegisterFormInputText } from "@/components/FormInputText";
 import Head from "@/components/Head";
 import { RegisterFormValues } from "@/types";
-import { Button, Grid, TextField } from "@mui/material";
+import { Alert, AlertTitle, Button, Grid, Stack, TextField } from "@mui/material";
 import { FC } from "react";
 import { FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
 
@@ -27,16 +27,21 @@ const Register: FC = () => {
         <form onSubmit={handleSubmit(onValid, onInvalid)}>
           <Grid container justifyContent="center" spacing={1} sx={{ padding: "6px" }}>
             <Grid item>
-              <FormInputText
+              <RegisterFormInputText
                 control={control}
                 name="userName"
                 label="名前(ふりがな)"
               />
             </Grid>
             <Grid item>
-              <TextField {...register("mailAddress")} label="メールアドレス" variant="outlined" />
+              <RegisterFormInputText
+                control={control}
+                name="mailAddress"
+                label="メールアドレス"
+              />
             </Grid>
           </Grid>
+
 
           <Grid container justifyContent="center" spacing={1} sx={{ padding: "6px" }}>
             <Grid item>
@@ -67,7 +72,11 @@ const Register: FC = () => {
       </FormProvider>
       <Grid container justifyContent="center" spacing={1} sx={{ padding: "6px" }}>
         <Grid item>
-          {errors.userName && (<>{errors.userName.message}</>)}
+          <Stack sx={{ width: '100%' }} spacing={2}>
+            <Alert severity="error">
+              <AlertTitle>{errors.userName && (<>{errors.userName.message}</>)}</AlertTitle>
+            </Alert>
+          </Stack>
         </Grid>
       </Grid>
     </>

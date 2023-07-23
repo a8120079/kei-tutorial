@@ -6,11 +6,34 @@
  * @FilePath: /kei-tutorial/client/src/components/FormInputText.tsx
  */
 
-import { RegisterForm } from "@/types";
+import { LoginFormInputTextProps, RegisterFormInputTextProps } from "@/types";
 import { TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
 
-export const FormInputText = ({ control, name, label, ...props }: RegisterForm) => (
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+import Stack from '@mui/material/Stack';
+
+
+export const LoginFormInputText = ({ control, name, label, ...props }: LoginFormInputTextProps) => (
+  <Controller
+  
+    control={control}
+    name={name}
+    rules={{
+      required: "This field is required.",
+    }}
+    render={() => (
+      <TextField
+        label={label}
+        variant="outlined"
+        {...props}
+      />
+    )}
+  />
+);
+
+export const RegisterFormInputText = ({ control, name, label, ...props }: RegisterFormInputTextProps) => (
   <Controller
     control={control}
     name={name}
