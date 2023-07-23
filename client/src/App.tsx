@@ -1,7 +1,7 @@
 /*
  * @Author: fantiga
  * @Date: 2023-07-21 23:55:12
- * @LastEditTime: 2023-07-21 23:58:17
+ * @LastEditTime: 2023-07-23 21:28:38
  * @LastEditors: fantiga
  * @FilePath: /kei-tutorial/client/src/App.tsx
  */
@@ -20,8 +20,6 @@ const App: FC = () => (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Level />} />
-        {/* <Route path="/register" element={<Register />} /> */}
-        {/* <Route path="/level" element={<Level />} /> */}
         <Route path="/game" element={<Game />} />
         <Route path="/result" element={<Result />} />
         <Route

@@ -1,7 +1,7 @@
 """
 Author: fantiga
 Date: 2023-07-17 21:40:22
-LastEditTime: 2023-07-17 21:40:22
+LastEditTime: 2023-07-23 16:24:42
 LastEditors: fantiga
 FilePath: /kei-tutorial/server/utils/db.py
 """
@@ -25,7 +25,7 @@ class Db:
         # 创建一个Cursor
         self.cur = self.conn.cursor()
 
-    def insertTableData(self, sql):
+    def setData(self, sql):
         """
         插入记录并返回新id
         """
@@ -34,21 +34,27 @@ class Db:
         self.conn.commit()
         return lastrowid
 
-    def selectTableData(self, sql):
+    def getAllData(self, sql):
         """
         查询并返回记录
         """
         self.cur.execute(sql)
         self.conn.commit()
+
         # 数据集
         get_table_data = self.cur.fetchall()
         # 表结构
         get_table_fields = self.cur.description
-        return [get_table_fields, get_table_data]
 
-    def selectRankNum(self, sql):
+        data = []
+        for i in get_table_data:
+            data.append({get_table_fields[i]: get_table_data[i]})
+
+        return data
+
+    def getData(self, sql):
         """
-        查询并返回排名
+        查询并返回单条数据
         """
         self.cur.execute(sql)
         self.conn.commit()
