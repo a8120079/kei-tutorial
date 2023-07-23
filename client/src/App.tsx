@@ -10,9 +10,7 @@ import React from "react";
 import { FC } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Game from "./pages/Game";
-import Home from "./pages/Home";
 import Level from "./pages/Level";
-import Register from "./pages/Register";
 import Result from "./pages/Result";
 
 import './styles/styles.css';
@@ -21,9 +19,9 @@ const App: FC = () => (
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/level" element={<Level />} />
+        <Route path="/" element={<Level />} />
+        {/* <Route path="/register" element={<Register />} /> */}
+        {/* <Route path="/level" element={<Level />} /> */}
         <Route path="/game" element={<Game />} />
         <Route path="/result" element={<Result />} />
         <Route

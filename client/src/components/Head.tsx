@@ -17,7 +17,6 @@ const Head: FC = () => {
     <header>
       <ul>
         <li><Link href="#" onClick={() => navigate('/')} >Home</Link></li>
-        <li><Link href="#" onClick={() => navigate('/level')} >Level Select</Link></li>
         <li><Link href="#" onClick={() => navigate('/game')} >Game</Link></li>
         <li><Link href="#" onClick={() => navigate('/result')} >Result</Link></li>
       </ul>
