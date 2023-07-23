@@ -160,4 +160,3 @@ const Level: FC = () => {
 };
 
 export default Level;
-
