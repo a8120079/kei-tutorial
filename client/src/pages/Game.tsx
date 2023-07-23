@@ -15,6 +15,7 @@ interface IBoardElements {
 }
 
 const tempScript: [number, number, boolean][] = [[3, 2, true], [2, 3, true], [2, 5, true], [3, 5, false], [4, 5, false], [4, 4, false], [4, 3, false], [4, 6, false]];
+const tempScript2: [number, number, boolean][] = [[1, 5, true]];
 
 // Declare the boardState to keep track of the stones on the board
 const initialBoardState: number[][] = [
