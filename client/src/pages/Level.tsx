@@ -7,7 +7,7 @@
  */
 
 import Head from "@/components/Head";
-import { Grid, Link, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import { Grid, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { FC } from "react";
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -100,8 +100,8 @@ const Level: FC = () => {
                 </ListItem>
               </List>
             </AccordionDetails>
-          </Accordion>          
-          <Accordion>
+          </Accordion>
+
           <Accordion defaultExpanded={true}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
@@ -139,7 +139,6 @@ const Level: FC = () => {
                 </ListItem>
               </List>
             </AccordionDetails>
-          </Accordion>
           </Accordion>
         </Grid>
       </Grid>
