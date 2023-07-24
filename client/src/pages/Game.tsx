@@ -14,8 +14,11 @@ interface IBoardElements {
   stone: number;
 }
 
-const tempScript: [number, number, boolean][] = [[3, 2, true], [2, 3, true], [2, 5, true], [3, 5, false], [4, 5, false], [4, 4, false], [4, 3, false], [4, 6, false]];
-const tempScript2: [number, number, boolean][] = [[1, 5, true]];
+// 定义脚本
+const tempScript: [number, number, boolean][] =[[1,0,false],[2,0,false],[3,0,false],[4,1,false],[5,1,false],[5,2,false],[6,3,false],[6,4,false],[6,5,false],[5,6,false],[4,6,false],[3,7,false],[2,7,false],[1,7,false],[2,6,false],[1,3,false],[2,3,false],[3,3,false],[1,2,true],[2,2,true],[3,2,true],[4,2,true],[4,3,true],[4,4,true],[3,4,true],[2,4,true],[1,4,true],[1,5,true]];
+
+
+const tempScript2: [number, number, boolean][] = [[0,5,false]]
 
 // Declare the boardState to keep track of the stones on the board
 const initialBoardState: number[][] = [
@@ -37,16 +40,15 @@ const boardWidth = boardSize * intersectionSize;
 const Game: FC = () => {
   // 棋盘状态
   const [boardState, setBoardState] = useState<number[][]>(initialBoardState);
+  
   // 棋子轮替，true=白；false=黑
   const [currentPlayer, setCurrentPlayer] = useState<boolean>(false);
   const [boardElements, setBoardElements] = useState<IBoardElements[]>([]);
-  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+  const [isCorrect, setIsCorrect] = useState<boolean| null>(null);
   const [nextBtnDisabled, setNextBtnDisabled] = useState<boolean>(true);
 
-  const checkAnswer = useCallback((row: number, col: number) => {
-    setIsCorrect((row === 1 && col === 0) ? true : false);
-    setNextBtnDisabled((row === 1 && col === 0) ? false : true);
-  }, []);
+
+  const [initialStonesPlaced, setInitialStonesPlaced] = useState<boolean>(false);
 
   /**
    * 放棋子的方程
@@ -57,12 +59,17 @@ const Game: FC = () => {
   const placeStone = useCallback((row: number, col: number, player: boolean = currentPlayer) => {
     if (boardState[row][col] === 0) {
       const newBoardState = [...boardState];
-      newBoardState[row][col] = player === true ? 2 : 1;
+      newBoardState[row][col] = player === false ? 1 : 2;
       setBoardState(newBoardState);
       setCurrentPlayer(!player);
-      checkAnswer(row, col);
+      const isCorrectPlacement = tempScript2.some(
+        ([r, c, _]) => row === r && col === c
+      );
+      console.log("isCorrectPlacement:", isCorrectPlacement); // デバッグのために追加
+      setIsCorrect(isCorrectPlacement);
+      setNextBtnDisabled(isCorrectPlacement);
     }
-    console.log(row, col);
+    // console.log(row, col);
   }, [boardState]);
 
   // 在最初的棋盘上画横线和竖线
@@ -111,6 +118,7 @@ const Game: FC = () => {
     for (let i = 0; i < tempScript.length; i++) {
       placeStone(tempScript[i][0], tempScript[i][1], tempScript[i][2]);
     }
+    setInitialStonesPlaced(true);
   }, []);
 
   return (
@@ -150,32 +158,31 @@ const Game: FC = () => {
           </Grid>
         </Grid>
       </Grid>
+      {/* show error/correct message */}
       {
-        isCorrect !== null ? (
+        isCorrect !== null && (
           <Grid container justifyContent="center" spacing={1} sx={{ padding: "6px" }}>
             <Grid item>
               <Stack sx={{ width: '100%' }} spacing={2}>
                 {
-                  isCorrect === true ? (
+                  isCorrect ? (
                     <Alert severity="success">
-                      <AlertTitle>Success</AlertTitle>
-                      This is a success alert — <strong>check it out!</strong>
+                      <AlertTitle>正解</AlertTitle>
                     </Alert>
                   ) : (
-                    <Alert severity="error">
-                      <AlertTitle>Error</AlertTitle>
-                      不正解 — <strong>check it out!</strong>
-                    </Alert>
+                    <>
+                      <Alert severity="error">
+                        <AlertTitle>不正解</AlertTitle>
+                      </Alert>
+                    </>
                   )
                 }
               </Stack>
             </Grid>
           </Grid>
         )
-          :
-          <></>
       }
-    </>
+  </>
   );
 };
 

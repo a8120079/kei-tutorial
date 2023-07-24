@@ -141,7 +141,7 @@ const Level: FC = () => {
             <Grid item>
               <Button
                 type="submit"
-                // onClick={() => navigate('/game')}
+                onClick={() => navigate('/game')}
                 variant="outlined"
                 sx={{
                   width: "400px",  // Set the width you desire
