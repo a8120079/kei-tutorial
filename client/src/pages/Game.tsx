@@ -15,10 +15,10 @@ interface IBoardElements {
 }
 
 // 定义脚本
-const tempScript: [number, number, boolean][] =[[1,0,false],[2,0,false],[3,0,false],[4,1,false],[5,1,false],[5,2,false],[6,3,false],[6,4,false],[6,5,false],[5,6,false],[4,6,false],[3,7,false],[2,7,false],[1,7,false],[2,6,false],[1,3,false],[2,3,false],[3,3,false],[1,2,true],[2,2,true],[3,2,true],[4,2,true],[4,3,true],[4,4,true],[3,4,true],[2,4,true],[1,4,true],[1,5,true]];
+const tempScript: [number, number, boolean][] = [[1, 0, false], [2, 0, false], [3, 0, false], [4, 1, false], [5, 1, false], [5, 2, false], [6, 3, false], [6, 4, false], [6, 5, false], [5, 6, false], [4, 6, false], [3, 7, false], [2, 7, false], [1, 7, false], [2, 6, false], [1, 3, false], [2, 3, false], [3, 3, false], [1, 2, true], [2, 2, true], [3, 2, true], [4, 2, true], [4, 3, true], [4, 4, true], [3, 4, true], [2, 4, true], [1, 4, true], [1, 5, true]];
 
 
-const tempScript2: [number, number, boolean][] = [[0,5,false]]
+const tempScript2: [number, number, boolean][] = [[0, 5, false]];
 
 // Declare the boardState to keep track of the stones on the board
 const initialBoardState: number[][] = [
@@ -40,11 +40,11 @@ const boardWidth = boardSize * intersectionSize;
 const Game: FC = () => {
   // 棋盘状态
   const [boardState, setBoardState] = useState<number[][]>(initialBoardState);
-  
+
   // 棋子轮替，true=白；false=黑
   const [currentPlayer, setCurrentPlayer] = useState<boolean>(false);
   const [boardElements, setBoardElements] = useState<IBoardElements[]>([]);
-  const [isCorrect, setIsCorrect] = useState<boolean| null>(null);
+  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [nextBtnDisabled, setNextBtnDisabled] = useState<boolean>(true);
 
 
@@ -182,7 +182,7 @@ const Game: FC = () => {
           </Grid>
         )
       }
-  </>
+    </>
   );
 };
 
