@@ -10,6 +10,7 @@ from pydantic import BaseModel
 
 class GameBase(BaseModel):
     level: int
+    game_name : str | None = None
     init_script: str | None = None
     exec_script: str | None = None
 

@@ -50,6 +50,20 @@ const Game: FC = () => {
 
   const [initialStonesPlaced, setInitialStonesPlaced] = useState<boolean>(false);
 
+  const resetBoard = useCallback(() => {
+    setBoardState(initialBoardState);
+    setCurrentPlayer(false);
+    setNextBtnDisabled(true);
+    setIsCorrect(null);
+    setBoardElements([]); // Clear the board elements
+  }, []);
+
+  // Function to handle the "AGAIN" button click
+  const handleAgainButtonClick = useCallback(() => {
+    resetBoard();
+  }, [resetBoard]);
+
+
   /**
    * 放棋子的方程
    *
@@ -151,9 +165,12 @@ const Game: FC = () => {
 
             ))}
           </div>
-          <Grid container justifyContent="center" spacing={1} sx={{ padding: "6px", marginTop: "6px" }}>
+          <Grid container justifyContent="center" spacing={2} sx={{ padding: "6px", marginTop: "6px" }}>
             <Grid item>
               <Button variant="contained" disabled={nextBtnDisabled}>NEXT</Button>
+            </Grid>
+            <Grid item>
+              <Button variant="contained" disabled={nextBtnDisabled} onClick={handleAgainButtonClick}>AGAIN</Button>
             </Grid>
           </Grid>
         </Grid>

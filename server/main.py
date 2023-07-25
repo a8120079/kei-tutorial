@@ -21,8 +21,23 @@ from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from starlette.status import HTTP_302_FOUND
 from fastapi.staticfiles import StaticFiles
+from .database import SessionLocal, engine
+from fastapi import Depends, FastAPI, HTTPException
+from sqlalchemy.orm import Session
+from . import crud, models, schemas
+
+models.Base.metadata.create_all(bind=engine)
 
 app = Flask(__name__)
+app = FastAPI()
+
+# Dependency
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 """
 跨域支持
@@ -39,11 +54,15 @@ headers = {
 }
 
 
-@app.route(r"/getLevelList", methods=["POST"])
-def getLevelList():
+@app.post("/getLevelList", response_model=schemas.level)
+def getLevelList(level: schemas.levelCreate, db: Session = Depends(get_db)):
+    
     """
     获取级别列表
     """
+    
+    return crud.create_getLevelList(db=db, level=level)
+
 
     db = Db()
     # 拼接sql语句
@@ -73,12 +92,29 @@ def getLevelList():
     return sql_list
 
 
-@app.route(r"/getGameList", methods=["POST"])
-def getGameList():
+@app.post("/getGameList", response_model=schemas.Game)
+def getGameList(game: schemas.GameCreate, db: Session = Depends(get_db)):
     """
     获取棋局列表
     """
-    return
+    return crud.get_games(db=db, game=game)
+
+
+@app.post("/getrecordList", response_model=schemas.Record)
+def getrecordList(game: schemas.GameCreate, db: Session = Depends(get_db)):
+    """
+    获取记录列表
+    """
+    return crud.create_record(db=db, game=game)
+
+
+@app.post("/getstepList", response_model=schemas.Step)
+def getstepList(game: schemas.Step, db: Session = Depends(get_db)):
+    """
+    获取手顺列表
+    """
+    return crud.create_step(db=db, game=game)
+
 
 
 if __name__ == "__main__":

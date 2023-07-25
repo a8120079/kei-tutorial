@@ -11,6 +11,8 @@ from sqlalchemy.orm import Session
 from . import models, schemas
 
 
+
+
 def get_games(db: Session):
     return db.query(models.Game).all()
 
@@ -24,7 +26,7 @@ def create_record(db: Session, record: schemas.RecordCreate):
     db.add(db_record)
     db.commit()
     db.refresh(db_record)
-    return db_record
+    return db_recordc
 
 
 def create_step(db: Session, step: schemas.StepCreate, record_id: int):
@@ -33,3 +35,4 @@ def create_step(db: Session, step: schemas.StepCreate, record_id: int):
     db.commit()
     db.refresh(db_step)
     return db_step
+

@@ -5,19 +5,22 @@ LastEditTime: 2023-07-23 22:09:51
 LastEditors: fantiga
 FilePath: /kei-tutorial/server/models.py
 """
+from flask import sessions
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime
 from sqlalchemy.orm import relationship
 
-from .database import Base
+from .database import Base, Session, SessionLocal
 
 
 class Game(Base):
     __tablename__ = "games"
 
     game_id = Column(Integer, autoincrement=True, primary_key=True, index=True)
+    game_name = Column(String)
     level = Column(Integer)
     init_script = Column(String)
     exec_script = Column(String)
+
 
 
 class Record(Base):
@@ -41,3 +44,4 @@ class Step(Base):
     uptime = Column(DateTime)
 
     record = relationship("Record", back_populates="steps")
+

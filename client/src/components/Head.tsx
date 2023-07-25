@@ -15,10 +15,11 @@ const Head: FC = () => {
 
   return (
     <header>
+      <h1 style={{ color: "#3399CC", padding: "20px"  }}>BingoGO</h1>
       <ul>
-        <li><Link href="#" onClick={() => navigate('/')} >Home</Link></li>
-        <li><Link href="#" onClick={() => navigate('/game')} >Game</Link></li>
-        <li><Link href="#" onClick={() => navigate('/result')} >Result</Link></li>
+        <li><Link href="#" onClick={() => navigate('/')} style={{ fontSize: "30px" }}>Home</Link></li>
+        <li><Link href="#" onClick={() => navigate('/game')} style={{ fontSize: "30px" }}>Game</Link></li>
+        <li><Link href="#" onClick={() => navigate('/result')} style={{ fontSize: "30px" }}>Result</Link></li>
       </ul>
     </header>
   );
