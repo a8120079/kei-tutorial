@@ -1,16 +1,17 @@
 """
 Author: fantiga
-Date: 2023-07-24 22:17:33
-LastEditTime: 2023-07-24 22:17:34
+Date: 2023-07-25 22:49:39
+LastEditTime: 2023-07-25 23:16:47
 LastEditors: fantiga
 FilePath: /kei-tutorial/server/schemas.py
 """
+
 from pydantic import BaseModel
 
 
 class GameBase(BaseModel):
     level: int
-    game_name : str | None = None
+    game_name: str | None = None
     init_script: str | None = None
     exec_script: str | None = None
 

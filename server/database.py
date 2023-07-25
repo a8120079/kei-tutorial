@@ -1,17 +1,18 @@
 """
 Author: fantiga
-Date: 2023-07-23 21:39:06
-LastEditTime: 2023-07-23 21:41:35
+Date: 2023-07-25 22:49:39
+LastEditTime: 2023-07-25 23:19:09
 LastEditors: fantiga
 FilePath: /kei-tutorial/server/database.py
 """
+
 
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 # 为 SQLAlchemy 定义数据库 URL地址
-SQLALCHEMY_DATABASE_URL = r"../db/kei_game.db"
+SQLALCHEMY_DATABASE_URL = r"sqlite:///../db/kei_game.db"
 # SQLALCHEMY_DATABASE_URL = "postgresql://user:password@postgresserver/db"
 
 """
@@ -32,5 +33,5 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
 
-Session = sessionmaker(bind=engine)
-session = Session()
+# Session = sessionmaker(bind=engine)
+# session = Session()

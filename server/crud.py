@@ -1,7 +1,7 @@
 """
 Author: fantiga
-Date: 2023-07-24 22:15:04
-LastEditTime: 2023-07-24 22:17:19
+Date: 2023-07-25 22:49:39
+LastEditTime: 2023-07-25 23:09:50
 LastEditors: fantiga
 FilePath: /kei-tutorial/server/crud.py
 """
@@ -9,8 +9,6 @@ import time
 from sqlalchemy.orm import Session
 
 from . import models, schemas
-
-
 
 
 def get_games(db: Session):
@@ -26,13 +24,12 @@ def create_record(db: Session, record: schemas.RecordCreate):
     db.add(db_record)
     db.commit()
     db.refresh(db_record)
-    return db_recordc
+    return db_record
 
 
 def create_step(db: Session, step: schemas.StepCreate, record_id: int):
-    db_step = models.Step(**step.dict(), record_id=record_id)
+    db_step = models.Step(**step.model_dump(), record_id=record_id)
     db.add(db_step)
     db.commit()
     db.refresh(db_step)
     return db_step
-

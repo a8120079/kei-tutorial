@@ -1,15 +1,14 @@
 """
 Author: fantiga
-Date: 2023-07-23 21:44:25
-LastEditTime: 2023-07-23 22:09:51
+Date: 2023-07-25 22:49:39
+LastEditTime: 2023-07-25 22:58:24
 LastEditors: fantiga
 FilePath: /kei-tutorial/server/models.py
 """
-from flask import sessions
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime
 from sqlalchemy.orm import relationship
 
-from .database import Base, Session, SessionLocal
+from .database import Base
 
 
 class Game(Base):
@@ -20,7 +19,6 @@ class Game(Base):
     level = Column(Integer)
     init_script = Column(String)
     exec_script = Column(String)
-
 
 
 class Record(Base):
@@ -44,4 +42,3 @@ class Step(Base):
     uptime = Column(DateTime)
 
     record = relationship("Record", back_populates="steps")
-

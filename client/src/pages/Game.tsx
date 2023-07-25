@@ -58,8 +58,8 @@ const Game: FC = () => {
     setBoardElements([]); // Clear the board elements
   }, []);
 
-  // Function to handle the "AGAIN" button click
-  const handleAgainButtonClick = useCallback(() => {
+  // Function to handle the "Replay" button click
+  const handleRePlayButtonClick = useCallback(() => {
     resetBoard();
   }, [resetBoard]);
 
@@ -167,10 +167,10 @@ const Game: FC = () => {
           </div>
           <Grid container justifyContent="center" spacing={2} sx={{ padding: "6px", marginTop: "6px" }}>
             <Grid item>
-              <Button variant="contained" disabled={nextBtnDisabled}>NEXT</Button>
+              <Button variant="contained" disabled={nextBtnDisabled} onClick={handleRePlayButtonClick}>Replay</Button>
             </Grid>
             <Grid item>
-              <Button variant="contained" disabled={nextBtnDisabled} onClick={handleAgainButtonClick}>AGAIN</Button>
+              <Button variant="contained" disabled={nextBtnDisabled}>Next</Button>
             </Grid>
           </Grid>
         </Grid>
