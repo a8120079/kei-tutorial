@@ -12,7 +12,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 # 为 SQLAlchemy 定义数据库 URL地址
-SQLALCHEMY_DATABASE_URL = r"sqlite:///../db/kei_game.db"
+SQLALCHEMY_DATABASE_URL = r"sqlite:///./db/kei_game.db"
 # SQLALCHEMY_DATABASE_URL = "postgresql://user:password@postgresserver/db"
 
 """

@@ -1,11 +1,12 @@
 """
 Author: fantiga
-Date: 2023-07-25 22:49:39
-LastEditTime: 2023-07-25 23:16:47
+Date: 2023-07-26 22:06:54
+LastEditTime: 2023-07-26 22:14:33
 LastEditors: fantiga
-FilePath: /kei-tutorial/server/schemas.py
+FilePath: /kei-tutorial/users/fantiga/projects/kei-tutorial/server/myapp/schemas.py
 """
 
+from typing import Optional
 from pydantic import BaseModel
 
 
@@ -24,7 +25,7 @@ class Game(GameBase):
     game_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class StepBase(BaseModel):
@@ -43,13 +44,13 @@ class Step(StepBase):
     is_active: bool
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class RecordBase(BaseModel):
     username: str
     level: int
-    create_time = str
+    create_time: Optional[str] = None
 
 
 class RecordCreate(RecordBase):
@@ -61,4 +62,4 @@ class Record(RecordBase):
     steps: list[Step] = []
 
     class Config:
-        orm_mode = True
+        from_attributes = True

@@ -1,14 +1,14 @@
 /*
  * @Author: fantiga
  * @Date: 2023-07-15 12:48:35
- * @LastEditTime: 2023-07-23 21:27:07
+ * @LastEditTime: 2023-07-26 23:35:29
  * @LastEditors: fantiga
  * @FilePath: /kei-tutorial/client/src/pages/Level.tsx
  */
 
 import Head from "@/components/Head";
 import { Alert, AlertTitle, Button, FormControl, FormControlLabel, Grid, Radio, RadioGroup, Stack } from "@mui/material";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -16,8 +16,9 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useNavigate } from "react-router-dom";
 import { FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
-import { LevelFormValues } from "@/types";
+import { GameFields, LevelFormValues } from "@/types";
 import { LevelFormInputText } from "@/components/FormInputText";
+import axios, { formatFormUrlencoded } from "@/utils/axios";
 
 const defaultValues = {
   userName: "",
@@ -26,11 +27,40 @@ const defaultValues = {
 
 const Level: FC = () => {
   const navigate = useNavigate();
+  const controller = new AbortController();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [gameList, setGameList] = useState<GameFields[]>([]);
+  const [error, setError] = useState<any>(null);
   const form = useForm<LevelFormValues>({ defaultValues });
   const { handleSubmit, control, formState: { errors } } = form;
 
   const onValid: SubmitHandler<LevelFormValues> = data => console.log(data);
   const onInvalid: SubmitErrorHandler<LevelFormValues> = errors => console.error(errors);
+
+  useEffect(() => {
+    axios
+      .post(
+        '/getGameList',
+        formatFormUrlencoded({
+          action: 'post',
+        }),
+      )
+      .then((e) => {
+        if (e.data && Array.isArray(e.data)) {
+          setGameList(e.data);
+          setIsLoading(false);
+        } else {
+          throw new Error('response is error');
+        }
+      })
+      .catch((err) => {
+        console.error('err=', err);
+        setIsLoading(false);
+        setError(err);
+      });
+
+    return () => controller.abort();
+  }, []);
 
   return (
     <>
@@ -48,7 +78,7 @@ const Level: FC = () => {
             </Grid>
           </Grid>
           <Grid container justifyContent="center">
-            <Grid item sx={{ width: "90%" }}>
+            <Grid item justifyContent="center" sx={{ display: "flex", width: "90%" }}>
               <FormControl>
                 <RadioGroup
                   name="level"
@@ -67,11 +97,19 @@ const Level: FC = () => {
                               <Typography>入門レベル</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
-                              <FormControlLabel sx={{ width: "100%" }} value={101} control={<Radio />} label="A-1" />
-                              <FormControlLabel sx={{ width: "100%" }} value={102} control={<Radio />} label="A-2" />
-                              <FormControlLabel sx={{ width: "100%" }} value={103} control={<Radio />} label="A-3" />
-                              <FormControlLabel sx={{ width: "100%" }} value={104} control={<Radio />} label="A-4" />
-                              <FormControlLabel sx={{ width: "100%" }} value={105} control={<Radio />} label="A-5" />
+                              {
+                                gameList
+                                  .filter((value) => value.level === 1)
+                                  .map((item, index) => (
+                                    <FormControlLabel
+                                      key={index}
+                                      label={item.game_name}
+                                      value={item.game_id}
+                                      sx={{ width: "100%" }}
+                                      control={<Radio />}
+                                    />
+                                  ))
+                              }
                             </AccordionDetails>
                           </Accordion>
                         </Grid>

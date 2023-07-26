@@ -26,9 +26,10 @@
   "dependencies": {
     "@emotion/react": "latest",
     "@emotion/styled": "latest",
-    "@mui/icons-material": "^5.14.1",
+    "@mui/icons-material": "latest",
     "@mui/material": "latest",
     "@mui/x-data-grid": "latest",
+    "axios": "latest",
     "mui": "latest",
     "portfinder": "latest",
     "react": "latest",

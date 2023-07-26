@@ -1,5 +1,12 @@
 """
 Author: fantiga
+Date: 2023-07-26 22:06:54
+LastEditTime: 2023-07-26 22:49:27
+LastEditors: fantiga
+FilePath: /kei-tutorial/server/myapp/models.py
+"""
+"""
+Author: fantiga
 Date: 2023-07-25 22:49:39
 LastEditTime: 2023-07-25 22:58:24
 LastEditors: fantiga
@@ -41,4 +48,4 @@ class Step(Base):
     is_correct = Column(Boolean)
     uptime = Column(DateTime)
 
-    record = relationship("Record", back_populates="steps")
+    record = relationship("Record", back_populates="step")

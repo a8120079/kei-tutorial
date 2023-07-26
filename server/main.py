@@ -9,25 +9,41 @@ FilePath: /kei-tutorial/server/main.py
 from fastapi import Depends, FastAPI
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
-from myapp import crud, models, schemas  # Replace 'myapp' with your package name
-from myapp.database import SessionLocal, engine  # Replace 'myapp' with your package name
+from myapp import (
+    crud,
+    models,
+    schemas,
+    database,
+)  # Replace 'myapp' with your package name
 from datetime import datetime  # Import the datetime module for type hint
+from fastapi.middleware.cors import CORSMiddleware
 
 
-
-models.Base.metadata.create_all(bind=engine)
+database.Base.metadata.create_all(bind=database.engine)
 
 
 app = FastAPI()
 
-class RecordBase(BaseModel):
-    username: str
-    level: int
-    create_time: datetime  # Use datetime type hint instead of str
+"""
+    跨域支持
+ """
+
+origins = [
+    "*",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 # Dependency
 def get_db():
-    db = SessionLocal()
+    db = database.SessionLocal()
     try:
         yield db
     finally:
@@ -59,5 +75,5 @@ def getGameList(db: Session = Depends(get_db)):
 #     return crud.create_step(db=db, game=game)
 
 
-if __name__ == "__main__":
-    app.run(debug=False)
+# if __name__ == "__main__":
+#     app.run(debug=False)
