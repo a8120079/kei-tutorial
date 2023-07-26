@@ -15,7 +15,7 @@ const Head: FC = () => {
 
   return (
     <header>
-      <Typography variant="h3" sx={{ color: "#3399CC", padding: "20px" }}>BingoGO</Typography>
+      <Typography variant="h3" sx={{ color: "#3399CC", padding: "20px" }}>BinGO</Typography>
       <ul>
         <li><Link href="#" onClick={() => navigate('/')} style={{ fontSize: "30px" }}>Home</Link></li>
         <li><Link href="#" onClick={() => navigate('/game')} style={{ fontSize: "30px" }}>Game</Link></li>

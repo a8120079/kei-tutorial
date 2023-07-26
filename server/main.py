@@ -7,15 +7,23 @@ FilePath: /kei-tutorial/server/main.py
 """
 
 from fastapi import Depends, FastAPI
+from pydantic import BaseModel
 from sqlalchemy.orm import Session
+from myapp import crud, models, schemas  # Replace 'myapp' with your package name
+from myapp.database import SessionLocal, engine  # Replace 'myapp' with your package name
+from datetime import datetime  # Import the datetime module for type hint
 
-from . import crud, models, schemas
-from .database import SessionLocal, engine
+
 
 models.Base.metadata.create_all(bind=engine)
 
+
 app = FastAPI()
 
+class RecordBase(BaseModel):
+    username: str
+    level: int
+    create_time: datetime  # Use datetime type hint instead of str
 
 # Dependency
 def get_db():
