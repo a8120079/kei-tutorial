@@ -59,17 +59,17 @@ def getGameList(db: Session = Depends(get_db)):
     return crud.get_games(db)
 
 
-# @app.post("/getRecordList", response_model=schemas.Record)
-# def getRecordList(game: schemas.GameCreate, db: Session = Depends(get_db)):
-#     """
-#     获取记录列表
-#     """
-#     return crud.create_record(db=db, game=game)
+@app.post("/getRecordList", response_model=schemas.Record)
+def getRecordList(game: schemas.GameCreate, db: Session = Depends(get_db)):
+    """
+    获取记录列表
+    """
+    return crud.create_record(db=db, game=game)
 
 
-# @app.post("/getStepList", response_model=schemas.Step)
-# def getStepList(game: schemas.Step, db: Session = Depends(get_db)):
-#     """
-#     获取手顺列表
-#     """
-#     return crud.create_step(db=db, game=game)
+@app.post("/getStepList", response_model=schemas.Step)
+def getStepList(game: schemas.Step, db: Session = Depends(get_db)):
+    """
+    获取手顺列表
+    """
+    return crud.create_step(db=db, game=game)
