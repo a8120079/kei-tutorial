@@ -1,7 +1,7 @@
 /*
  * @Author: fantiga
  * @Date: 2023-07-22 23:01:10
- * @LastEditTime: 2023-07-22 23:39:43
+ * @LastEditTime: 2023-07-27 23:04:22
  * @LastEditors: fantiga
  * @FilePath: /kei-tutorial/client/src/components/FormInputText.tsx
  */
@@ -14,11 +14,12 @@ export const LevelFormInputText = ({ control, name, label, ...props }: LevelForm
   <Controller
     control={control}
     name={name}
-    // rules={{
-    //   required: "This field is required.",
-    // }}
-    render={() => (
+    rules={{
+      required: "This field is required.",
+    }}
+    render={({ field }) => (
       <TextField
+        {...field}
         label={label}
         variant="outlined"
         {...props}

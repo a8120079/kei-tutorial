@@ -9,7 +9,7 @@ FilePath: /kei-tutorial/server/main.py
 from fastapi import Depends, FastAPI
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
-from myapp import (
+from utils import (
     crud,
     models,
     schemas,
