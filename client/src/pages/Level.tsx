@@ -1,7 +1,7 @@
 /*
  * @Author: fantiga
  * @Date: 2023-07-15 12:48:35
- * @LastEditTime: 2023-07-29 12:16:44
+ * @LastEditTime: 2023-07-29 22:36:30
  * @LastEditors: fantiga
  * @FilePath: /kei-tutorial/client/src/pages/Level.tsx
  */
@@ -22,7 +22,7 @@ import axios, { formatFormUrlencoded } from "@/utils/axios";
 
 const defaultValues: LevelFormValues = {
   userName: "",
-  gameId: 1,
+  gameId: 0,
 };
 
 const Level: FC = () => {
@@ -31,6 +31,7 @@ const Level: FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [gameList, setGameList] = useState<GameFields[]>([]);
   const [error, setError] = useState<any>(null);
+  const [userName, setUsername] = useState<string>("");
   const form = useForm<LevelFormValues>({ defaultValues });
   const { handleSubmit, register, control, formState: { errors } } = form;
 
@@ -66,17 +67,27 @@ const Level: FC = () => {
     return () => controller.abort();
   }, []);
 
+  useEffect(() => {
+    form.setValue("gameId", gameList[0] ? gameList[0].game_id : 0);
+  }, [gameList]);
+
+  useEffect(() => {
+    form.setValue("userName", sessionStorage.getItem("userName") ?? "");
+  }, [sessionStorage.getItem("userName")]);
+
   return (
     <>
       <Head />
       <FormProvider {...form}>
         <form onSubmit={handleSubmit(onValid, onInvalid)}>
           <Grid container justifyContent="center" spacing={1} sx={{ padding: "6px" }}>
-            <Grid item>
+            <Grid item sx={{ width: "400px" }}>
               <LevelFormInputText
                 control={control}
                 name="userName"
+                value={userName}
                 label="お名前"
+                onChange={(event) => form.setValue("userName", event.target.value)}
                 errors={errors}
               />
             </Grid>
@@ -84,7 +95,7 @@ const Level: FC = () => {
           {errors.userName && (
             <Grid container justifyContent="center" spacing={1} sx={{ padding: "6px" }}>
               <Grid item>
-                <Stack sx={{ width: '100%' }} spacing={2}>
+                <Stack sx={{ width: "100%" }} spacing={2}>
                   <Alert severity="error">
                     <AlertTitle>{errors.userName.message}</AlertTitle>
                   </Alert>

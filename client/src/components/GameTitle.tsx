@@ -1,7 +1,7 @@
 /*
  * @Author: fantiga
  * @Date: 2023-07-29 12:37:45
- * @LastEditTime: 2023-07-29 12:50:08
+ * @LastEditTime: 2023-07-29 21:07:56
  * @LastEditors: fantiga
  * @FilePath: /kei-tutorial/client/src/components/GameTitle.tsx
  */
@@ -17,7 +17,6 @@ export const GameTitle: FC<GameTitleProps> = ({ userName, gameId }) => (
         <Grid item>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>Your name:</Typography>
         </Grid>
-
         <Grid item>
           <Chip label={userName} />
         </Grid>
