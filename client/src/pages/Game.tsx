@@ -4,6 +4,8 @@ import { FC, useCallback, useEffect, useState } from "react";
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Stack from '@mui/material/Stack';
+import { useLocation, useNavigation } from "react-router-dom";
+import { GameTitle } from "@/components/GameTitle";
 
 // 定义IBoardElements的形式
 interface IBoardElements {
@@ -15,10 +17,10 @@ interface IBoardElements {
 }
 
 // 定义脚本
-const tempScript: [number, number, boolean][] = [[2,1,false],[3,1,false],[2,2,false],[2,3,false],[2,4,false],[2,5,false],[2,6,false],[2,7,false],[3,7,false],[3,8,false],[4,8,false],[5,8,false],[6,1,false],[6,2,false],[6,3,false],[6,4,false],[6,5,false],[6,6,false],[6,7,false], [4,1,true],[3,2,true],[3,3,true],[3,4,true],[3,5,true],[4,7,true],[5,7,true],[5,6,true],[5,5,true],[5,4,true],[5,3,true],[5,2,true],[5,1,false],[4,4,true]];
+const tempScript: [number, number, boolean][] = [[2, 1, false], [3, 1, false], [2, 2, false], [2, 3, false], [2, 4, false], [2, 5, false], [2, 6, false], [2, 7, false], [3, 7, false], [3, 8, false], [4, 8, false], [5, 8, false], [6, 1, false], [6, 2, false], [6, 3, false], [6, 4, false], [6, 5, false], [6, 6, false], [6, 7, false], [4, 1, true], [3, 2, true], [3, 3, true], [3, 4, true], [3, 5, true], [4, 7, true], [5, 7, true], [5, 6, true], [5, 5, true], [5, 4, true], [5, 3, true], [5, 2, true], [5, 1, false], [4, 4, true]];
 
 
-const tempScript2: [number, number, boolean][] = [[0,2,false]];
+const tempScript2: [number, number, boolean][] = [[0, 2, false]];
 
 // Declare the boardState to keep track of the stones on the board
 const initialBoardState: number[][] = [
@@ -38,6 +40,8 @@ const intersectionSize = 30;
 const boardWidth = boardSize * intersectionSize;
 
 const Game: FC = () => {
+  const { gameId } = useLocation().state;
+
   // 棋盘状态
   const [boardState, setBoardState] = useState<number[][]>(initialBoardState);
 
@@ -140,6 +144,7 @@ const Game: FC = () => {
       {/* 把棋盘显示在页面上 */}
       <Head />
 
+      <GameTitle userName={sessionStorage.getItem("userName") ?? ""} gameId={gameId} />
       <Grid container justifyContent="center" spacing={1} sx={{ padding: "6px" }}>
         <Grid item>
           <div
