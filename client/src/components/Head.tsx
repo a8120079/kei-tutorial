@@ -1,12 +1,12 @@
 /*
  * @Author: fantiga
  * @Date: 2023-07-15 12:36:55
- * @LastEditTime: 2023-07-29 21:58:30
+ * @LastEditTime: 2023-08-05 21:38:43
  * @LastEditors: fantiga
  * @FilePath: /kei-tutorial/client/src/components/Head.tsx
  */
 
-import { Link, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 

@@ -1,7 +1,7 @@
 /*
  * @Author: fantiga
  * @Date: 2023-07-15 12:48:35
- * @LastEditTime: 2023-07-29 22:36:30
+ * @LastEditTime: 2023-08-05 21:44:39
  * @LastEditors: fantiga
  * @FilePath: /kei-tutorial/client/src/pages/Level.tsx
  */
@@ -14,7 +14,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Controller, FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
 import { GameFields, LevelFormValues } from "@/types";
 import { LevelFormInputText } from "@/components/FormInputText";
@@ -92,17 +92,19 @@ const Level: FC = () => {
               />
             </Grid>
           </Grid>
-          {errors.userName && (
-            <Grid container justifyContent="center" spacing={1} sx={{ padding: "6px" }}>
-              <Grid item>
-                <Stack sx={{ width: "100%" }} spacing={2}>
-                  <Alert severity="error">
-                    <AlertTitle>{errors.userName.message}</AlertTitle>
-                  </Alert>
-                </Stack>
+          {
+            errors.userName && (
+              <Grid container justifyContent="center" spacing={1} sx={{ padding: "6px" }}>
+                <Grid item>
+                  <Stack sx={{ width: "100%" }} spacing={2}>
+                    <Alert severity="error">
+                      <AlertTitle>{errors.userName.message}</AlertTitle>
+                    </Alert>
+                  </Stack>
+                </Grid>
               </Grid>
-            </Grid>
-          )}
+            )
+          }
           <Grid container justifyContent="center">
             <Grid item justifyContent="center" sx={{ display: "flex", width: "90%" }}>
               <Controller

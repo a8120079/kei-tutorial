@@ -1,7 +1,7 @@
 """
 Author: fantiga
-Date: 2023-07-25 22:49:39
-LastEditTime: 2023-07-25 23:13:09
+Date: 2023-07-27 22:45:02
+LastEditTime: 2023-08-04 23:55:29
 LastEditors: fantiga
 FilePath: /kei-tutorial/server/main.py
 """
@@ -14,7 +14,7 @@ from utils import (
     models,
     schemas,
     database,
-)  # Replace 'myapp' with your package name
+)
 from datetime import datetime  # Import the datetime module for type hint
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -25,8 +25,8 @@ database.Base.metadata.create_all(bind=database.engine)
 app = FastAPI()
 
 """
-    跨域支持
- """
+跨域支持
+"""
 
 origins = [
     "*",
