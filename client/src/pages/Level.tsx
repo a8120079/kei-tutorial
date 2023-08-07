@@ -1,7 +1,7 @@
 /*
  * @Author: fantiga
  * @Date: 2023-07-15 12:48:35
- * @LastEditTime: 2023-08-05 21:44:39
+ * @LastEditTime: 2023-08-07 23:04:09
  * @LastEditors: fantiga
  * @FilePath: /kei-tutorial/client/src/pages/Level.tsx
  */
@@ -28,9 +28,7 @@ const defaultValues: LevelFormValues = {
 const Level: FC = () => {
   const navigate = useNavigate();
   const controller = new AbortController();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [gameList, setGameList] = useState<GameFields[]>([]);
-  const [error, setError] = useState<any>(null);
   const [userName, setUsername] = useState<string>("");
   const form = useForm<LevelFormValues>({ defaultValues });
   const { handleSubmit, register, control, formState: { errors } } = form;
@@ -42,6 +40,7 @@ const Level: FC = () => {
 
   const onInvalid: SubmitErrorHandler<LevelFormValues> = errors => console.error(errors);
 
+  // 异步获取关卡数据
   useEffect(() => {
     axios
       .post(
@@ -52,25 +51,32 @@ const Level: FC = () => {
       )
       .then((e) => {
         if (e.data && Array.isArray(e.data)) {
+          // 如果异步获取的数据不为空
+          // 写入 gameList
           setGameList(e.data);
-          setIsLoading(false);
         } else {
           throw new Error('response is error');
         }
       })
       .catch((err) => {
         console.error('err=', err);
-        setIsLoading(false);
-        setError(err);
       });
 
     return () => controller.abort();
   }, []);
 
+  /**
+   * 当 gameList 发生改变的时候，
+   * 默认选中第一个 game_id
+   */
   useEffect(() => {
     form.setValue("gameId", gameList[0] ? gameList[0].game_id : 0);
   }, [gameList]);
 
+  /**
+   * 当 sessionStorage 中有 userName 时，
+   * 将 sessionStorage 中的 userName 填入表单中
+   */
   useEffect(() => {
     form.setValue("userName", sessionStorage.getItem("userName") ?? "");
   }, [sessionStorage.getItem("userName")]);

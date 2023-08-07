@@ -1,10 +1,11 @@
 """
 Author: fantiga
-Date: 2023-07-26 22:06:54
-LastEditTime: 2023-07-26 22:21:22
+Date: 2023-07-27 22:45:02
+LastEditTime: 2023-08-07 23:02:23
 LastEditors: fantiga
-FilePath: /kei-tutorial/users/fantiga/projects/kei-tutorial/server/myapp/crud.py
+FilePath: /kei-tutorial/server/utils/crud.py
 """
+
 import time
 from sqlalchemy.orm import Session
 
