@@ -6,6 +6,7 @@ import AlertTitle from '@mui/material/AlertTitle';
 import Stack from '@mui/material/Stack';
 import { useLocation } from "react-router-dom";
 import { GameTitle } from "@/components/GameTitle";
+import axios, { formatFormUrlencoded } from "@/utils/axios";
 
 // 定义IBoardElements的形式
 interface IBoardElements {
@@ -39,6 +40,7 @@ const boardWidth = boardSize * intersectionSize;
 
 const Game: FC = () => {
   const { gameId } = useLocation().state;
+  const controller = new AbortController();
 
   // 棋盘状态
   const [boardState, setBoardState] = useState<number[][]>(initialBoardState);
@@ -132,6 +134,33 @@ const Game: FC = () => {
       placeStone(tempScript[i][0], tempScript[i][1], tempScript[i][2]);
     }
     setInitialStonesPlaced(true);
+  }, []);
+
+  // 异步获取 Game 数据
+  useEffect(() => {
+    axios
+      .post(
+        '/getGame',
+        formatFormUrlencoded({
+          action: 'post',
+          game_id: gameId
+        }),
+      )
+      .then((e) => {
+        console.log(e);
+        // if (e.data && Array.isArray(e.data)) {
+        //   // 如果异步获取的数据不为空
+        //   // 写入 gameList
+        //   setGameList(e.data);
+        // } else {
+        //   throw new Error('response is error');
+        // }
+      })
+      .catch((err) => {
+        console.error('err=', err);
+      });
+
+    return () => controller.abort();
   }, []);
 
   return (

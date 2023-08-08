@@ -16,6 +16,10 @@ def get_games(db: Session):
     return db.query(models.Game).all()
 
 
+def get_game(db: Session, game_id: int):
+    return db.query(models.Game).filter(models.Game.game_id == game_id).first()
+
+
 # def create_record(db: Session, record: schemas.RecordCreate):
 #     db_record = models.Record(
 #         username=record.username,

@@ -1,12 +1,19 @@
 """
 Author: fantiga
 Date: 2023-07-27 22:45:02
+LastEditTime: 2023-08-08 23:04:23
+LastEditors: fantiga
+FilePath: /kei-tutorial/server/main.py
+"""
+"""
+Author: fantiga
+Date: 2023-07-27 22:45:02
 LastEditTime: 2023-08-04 23:55:29
 LastEditors: fantiga
 FilePath: /kei-tutorial/server/main.py
 """
 
-from fastapi import Depends, FastAPI
+from fastapi import Depends, FastAPI, HTTPException
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from utils import (
@@ -57,6 +64,31 @@ def getGameList(db: Session = Depends(get_db)):
     """
 
     return crud.get_games(db)
+
+
+@app.post("/getGame/game_id/{game_id}", response_model=list[schemas.Game])
+async def getGame(game_id: int, db: Session = Depends(get_db)):
+    """
+    通过 game_id 获取棋局
+    """
+    db_game = crud.get_game(db, game_id=game_id)
+    if db_game is None:
+        raise HTTPException(status_code=404, detail="Game not found")
+    return db_game
+
+
+# @app.get("/users/{user_id}/items/{item_id}")
+# async def read_user_item(
+#     user_id: int, item_id: str, q: Union[str, None] = None, short: bool = False
+# ):
+#     item = {"item_id": item_id, "owner_id": user_id}
+#     if q:
+#         item.update({"q": q})
+#     if not short:
+#         item.update(
+#             {"description": "This is an amazing item that has a long description"}
+#         )
+#     return item
 
 
 @app.post("/getRecordList", response_model=schemas.Record)
