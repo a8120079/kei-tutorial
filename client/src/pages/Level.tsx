@@ -1,7 +1,7 @@
 /*
  * @Author: fantiga
  * @Date: 2023-07-15 12:48:35
- * @LastEditTime: 2023-08-07 23:04:09
+ * @LastEditTime: 2023-08-13 14:42:41
  * @LastEditors: fantiga
  * @FilePath: /kei-tutorial/client/src/pages/Level.tsx
  */
@@ -43,11 +43,8 @@ const Level: FC = () => {
   // 异步获取关卡数据
   useEffect(() => {
     axios
-      .post(
+      .get(
         '/getGameList',
-        formatFormUrlencoded({
-          action: 'post',
-        }),
       )
       .then((e) => {
         if (e.data && Array.isArray(e.data)) {

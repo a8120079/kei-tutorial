@@ -1,17 +1,11 @@
 """
 Author: fantiga
 Date: 2023-07-27 22:45:02
-LastEditTime: 2023-08-08 23:04:23
+LastEditTime: 2023-08-13 14:39:09
 LastEditors: fantiga
 FilePath: /kei-tutorial/server/main.py
 """
-"""
-Author: fantiga
-Date: 2023-07-27 22:45:02
-LastEditTime: 2023-08-04 23:55:29
-LastEditors: fantiga
-FilePath: /kei-tutorial/server/main.py
-"""
+
 
 from fastapi import Depends, FastAPI, HTTPException
 from pydantic import BaseModel
@@ -57,7 +51,7 @@ def get_db():
         db.close()
 
 
-@app.post("/getGameList", response_model=list[schemas.Game])
+@app.get("/getGameList", response_model=list[schemas.Game])
 def getGameList(db: Session = Depends(get_db)):
     """
     获取棋局列表
@@ -66,7 +60,7 @@ def getGameList(db: Session = Depends(get_db)):
     return crud.get_games(db)
 
 
-@app.post("/getGame/game_id/{game_id}", response_model=list[schemas.Game])
+@app.post("/getGame", response_model=list[schemas.Game])
 async def getGame(game_id: int, db: Session = Depends(get_db)):
     """
     通过 game_id 获取棋局
