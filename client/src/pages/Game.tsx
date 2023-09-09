@@ -87,6 +87,10 @@ const Game: FC = () => {
     // console.log(row, col);
   }, [boardState]);
 
+  useEffect(() => {
+    resetBoard();
+  }, []);
+
   // 在最初的棋盘上画横线和竖线
   useEffect(() => {
     const board = document.getElementById("board");
