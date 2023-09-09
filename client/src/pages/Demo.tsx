@@ -8,54 +8,31 @@
 
 import { useEffect, useState } from "react";
 
-
 const Demo = () => {
-
-  const [startTime, setStartTime] = useState<Date>();
+  const [startTime] = useState<Date>(new Date());
   const [timer, setTimer] = useState<string>("00:00:00");
-  // const [value, setValue] = useState<number>(0);
-
-  // /**
-  //  * 秒数转时间
-  //  * @param t
-  //  */
-  // const timeConvert = (t: number): string => {
-  //   const hour = 0;
-  //   const minute = 0;
-  //   const second = 0;
-
-
-
-  //   return "";
-  // };
 
   useEffect(() => {
     const timerId = setInterval(() => {
       const now = new Date();
-      // setStartTime(now);
+      const elapsedTimeInSeconds = Math.floor((now.getTime() - startTime.getTime()) / 1000);
+      const hours = Math.floor(elapsedTimeInSeconds / 3600);
+      const minutes = Math.floor((elapsedTimeInSeconds % 3600) / 60);
+      const seconds = elapsedTimeInSeconds % 60;
 
-
-
-      // const start = now.;
-      console.log(now);
-      setTimer(now.toTimeString());
-
-      // const millis = Date.now() - start;
-
-      // console.log(`seconds elapsed = ${Math.floor(millis / 1000)}`);
-    },
-      // 1000毫秒=1秒
-      1000
-    );
+      const formattedTime = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+      
+      setTimer(formattedTime);
+    }, 1000);
 
     return () => {
       clearInterval(timerId);
     };
-  }, []);
+  }, [startTime]);
 
   return (
-    <>Timer: {timer}
-      {/* <button value={value} onClick={(e) => setValue(value + 1)} >{value}</button> */}
+    <>
+      Timer: {timer}
     </>
   );
 };
