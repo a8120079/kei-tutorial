@@ -140,14 +140,15 @@ const Game: FC = () => {
   useEffect(() => {
     axios
       .post(
-        '/getGame',
+        // '/getGame/?game_id=' + gameId,
+        '/getGame/',
         formatFormUrlencoded({
           action: 'post',
           game_id: gameId
         }),
       )
       .then((e) => {
-        console.log(e);
+        console.log("eeeeeeeee", e);
         // if (e.data && Array.isArray(e.data)) {
         //   // 如果异步获取的数据不为空
         //   // 写入 gameList

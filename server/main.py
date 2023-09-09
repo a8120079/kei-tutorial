@@ -7,7 +7,7 @@ FilePath: /kei-tutorial/server/main.py
 """
 
 
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException, Form, Body
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from utils import (
@@ -22,16 +22,14 @@ from fastapi.middleware.cors import CORSMiddleware
 
 database.Base.metadata.create_all(bind=database.engine)
 
-
 app = FastAPI()
+
 
 """
 跨域支持
 """
 
-origins = [
-    "*",
-]
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -60,12 +58,14 @@ def getGameList(db: Session = Depends(get_db)):
     return crud.get_games(db)
 
 
-@app.post("/getGame", response_model=list[schemas.Game])
-async def getGame(game_id: int, db: Session = Depends(get_db)):
+@app.post("/getGame/", response_model=list[schemas.Game])
+def getGame(game_id: int = Form(), db: Session = Depends(get_db)):
     """
-    通过 game_id 获取棋局
+    通过 {game_id} 获取棋局
     """
     db_game = crud.get_game(db, game_id=game_id)
+
+    print("aaaaaa", db_game)
     if db_game is None:
         raise HTTPException(status_code=404, detail="Game not found")
     return db_game
@@ -85,17 +85,17 @@ async def getGame(game_id: int, db: Session = Depends(get_db)):
 #     return item
 
 
-@app.post("/getRecordList", response_model=schemas.Record)
-def getRecordList(game: schemas.GameCreate, db: Session = Depends(get_db)):
-    """
-    获取记录列表
-    """
-    return crud.create_record(db=db, game=game)
+# @app.post("/getRecordList", response_model=schemas.Record)
+# def getRecordList(game: schemas.GameCreate, db: Session = Depends(get_db)):
+#     """
+#     获取记录列表
+#     """
+#     return crud.create_record(db=db, game=game)
 
 
-@app.post("/getStepList", response_model=schemas.Step)
-def getStepList(game: schemas.Step, db: Session = Depends(get_db)):
-    """
-    获取手顺列表
-    """
-    return crud.create_step(db=db, game=game)
+# @app.post("/getStepList", response_model=schemas.Step)
+# def getStepList(game: schemas.Step, db: Session = Depends(get_db)):
+#     """
+#     获取手顺列表
+#     """
+#     return crud.create_step(db=db, game=game)

@@ -1,9 +1,9 @@
 """
 Author: fantiga
-Date: 2023-07-25 22:49:39
-LastEditTime: 2023-07-25 23:19:09
+Date: 2023-07-27 22:45:02
+LastEditTime: 2023-09-09 20:42:40
 LastEditors: fantiga
-FilePath: /kei-tutorial/server/database.py
+FilePath: /kei-tutorial/server/utils/database.py
 """
 
 
@@ -13,7 +13,6 @@ from sqlalchemy.orm import sessionmaker
 
 # 为 SQLAlchemy 定义数据库 URL地址
 SQLALCHEMY_DATABASE_URL = r"sqlite:///./db/kei_game.db"
-# SQLALCHEMY_DATABASE_URL = "postgresql://user:password@postgresserver/db"
 
 """
 connect_args={"check_same_thread": False} 仅用于SQLite,在其他数据库不需要它。
