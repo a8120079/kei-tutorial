@@ -1,11 +1,10 @@
 """
 Author: fantiga
 Date: 2023-07-27 22:45:02
-LastEditTime: 2023-09-09 20:42:40
+LastEditTime: 2023-09-16 16:32:22
 LastEditors: fantiga
 FilePath: /kei-tutorial/server/utils/database.py
 """
-
 
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -25,7 +24,7 @@ engine = create_engine(
     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
 )
 
-# 创建一个SessionLocal类¶
+# 创建一个SessionLocal类
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # 使用declarative_base()返回一个类。

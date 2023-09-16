@@ -1,7 +1,7 @@
 /*
  * @Author: fantiga
  * @Date: 2023-07-26 23:05:12
- * @LastEditTime: 2023-07-26 23:06:54
+ * @LastEditTime: 2023-09-16 18:19:40
  * @LastEditors: fantiga
  * @FilePath: /kei-tutorial/client/src/types/field/Game.ts
  */

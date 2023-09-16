@@ -1,7 +1,7 @@
 /*
  * @Author: fantiga
  * @Date: 1013-07-15 11:50:44
- * @LastEditTime: 2023-07-21 23:54:21
+ * @LastEditTime: 2023-09-16 18:29:32
  * @LastEditors: fantiga
  * @FilePath: /kei-tutorial/client/src/pages/Result.tsx
  */
@@ -53,30 +53,28 @@ const rows = [
   { id: 15, userName: "Roxie", level: "入門", correct: "正解", createTime: "11/08/2023 11:02:23" },
 ];
 
-const Result: FC = () => {
-  return (
-    <>
-      <Head />
-      <Grid container justifyContent="center" spacing={1} sx={{ padding: "6px" }}>
-        <Grid item>
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            initialState={{
-              pagination: {
-                paginationModel: {
-                  pageSize: 5,
-                },
+const Result: FC = () => (
+  <>
+    <Head />
+    <Grid container justifyContent="center" spacing={1} sx={{ padding: "6px" }}>
+      <Grid item>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 5,
               },
-            }}
-            pageSizeOptions={[5]}
-            checkboxSelection
-            disableRowSelectionOnClick
-          />
-        </Grid>
+            },
+          }}
+          pageSizeOptions={[5]}
+          checkboxSelection
+          disableRowSelectionOnClick
+        />
       </Grid>
-    </>
-  );
-};
+    </Grid>
+  </>
+);
 
 export default Result;

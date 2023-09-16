@@ -6,22 +6,14 @@ import AlertTitle from '@mui/material/AlertTitle';
 import Stack from '@mui/material/Stack';
 import { useLocation } from "react-router-dom";
 import { GameTitle } from "@/components/GameTitle";
-import axios, { formatFormUrlencoded } from "@/utils/axios";
-
-// 定义IBoardElements的形式
-interface IBoardElements {
-  x: number;
-  y: number;
-  row: number;
-  col: number;
-  stone: number;
-}
+import axios from "@/utils/axios";
+import { BoardElements, GameFields } from "@/types";
 
 // 定义脚本
-const tempScript: [number, number, boolean][] = [[2, 1, false], [3, 1, false], [2, 2, false], [2, 3, false], [2, 4, false], [2, 5, false], [2, 6, false], [2, 7, false], [3, 7, false], [3, 8, false], [4, 8, false], [5, 8, false], [6, 1, false], [6, 2, false], [6, 3, false], [6, 4, false], [6, 5, false], [6, 6, false], [6, 7, false], [4, 1, true], [3, 2, true], [3, 3, true], [3, 4, true], [3, 5, true], [4, 7, true], [5, 7, true], [5, 6, true], [5, 5, true], [5, 4, true], [5, 3, true], [5, 2, true], [5, 1, false], [4, 4, true]];
+// const tempScript: [number, number, boolean][] = [[2, 1, false], [3, 1, false], [2, 2, false], [2, 3, false], [2, 4, false], [2, 5, false], [2, 6, false], [2, 7, false], [3, 7, false], [3, 8, false], [4, 8, false], [5, 8, false], [6, 1, false], [6, 2, false], [6, 3, false], [6, 4, false], [6, 5, false], [6, 6, false], [6, 7, false], [4, 1, true], [3, 2, true], [3, 3, true], [3, 4, true], [3, 5, true], [4, 7, true], [5, 7, true], [5, 6, true], [5, 5, true], [5, 4, true], [5, 3, true], [5, 2, true], [5, 1, false], [4, 4, true]];
 const tempScript2: [number, number, boolean][] = [[0, 2, false]];
 
-// Declare the boardState to keep track of the stones on the board
+// 初始化棋盘
 const initialBoardState: number[][] = [
   Array(9).fill(0),
   Array(9).fill(0),
@@ -47,11 +39,16 @@ const Game: FC = () => {
 
   // 棋子轮替，true=白；false=黑
   const [currentPlayer, setCurrentPlayer] = useState<boolean>(false);
-  const [boardElements, setBoardElements] = useState<IBoardElements[]>([]);
+  const [boardElements, setBoardElements] = useState<BoardElements[]>([]);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [nextBtnDisabled, setNextBtnDisabled] = useState<boolean>(true);
   const [initialStonesPlaced, setInitialStonesPlaced] = useState<boolean>(false);
+  // 初始棋谱
+  const [initialScript, setInitialScript] = useState<[number, number, boolean][]>([]);
 
+  /**
+   * 重置棋盘
+   */
   const resetBoard = useCallback(() => {
     setBoardState(initialBoardState);
     setCurrentPlayer(false);
@@ -60,7 +57,9 @@ const Game: FC = () => {
     setBoardElements([]); // Clear the board elements
   }, []);
 
-  // Function to handle the "Replay" button click
+  /**
+   * 响应 Replay 按钮事件
+   */
   const handleRePlayButtonClick = useCallback(() => {
     resetBoard();
   }, [resetBoard]);
@@ -68,8 +67,9 @@ const Game: FC = () => {
   /**
    * 放棋子的方程
    *
-   * @param row
-   * @param col
+   * @param {number} row
+   * @param {number} col
+   * @param {boolean} player
    */
   const placeStone = useCallback((row: number, col: number, player: boolean = currentPlayer) => {
     if (boardState[row][col] === 0) {
@@ -87,11 +87,17 @@ const Game: FC = () => {
     // console.log(row, col);
   }, [boardState]);
 
+  /**
+   * 初期表示1
+   * 重置棋盘
+   */
   useEffect(() => {
     resetBoard();
   }, []);
 
-  // 在最初的棋盘上画横线和竖线
+  /**
+   * 在最初的棋盘上画横线和竖线
+   */
   useEffect(() => {
     const board = document.getElementById("board");
     if (board) {
@@ -111,7 +117,7 @@ const Game: FC = () => {
   }, [boardSize]);
 
   useEffect(() => {
-    const elements: IBoardElements[] = [];
+    const elements: BoardElements[] = [];
 
     for (let row = 0; row < boardSize; row++) {
       for (let col = 0; col < boardSize; col++) {
@@ -133,33 +139,33 @@ const Game: FC = () => {
 
   }, [boardState, currentPlayer]);
 
+  /**
+   * 对初始棋谱进行落子
+   */
   useEffect(() => {
-    for (let i = 0; i < tempScript.length; i++) {
-      placeStone(tempScript[i][0], tempScript[i][1], tempScript[i][2]);
+    for (let i = 0; i < initialScript.length; i++) {
+      placeStone(initialScript[i][0], initialScript[i][1], initialScript[i][2]);
     }
     setInitialStonesPlaced(true);
-  }, []);
+  }, [initialScript]);
 
   // 异步获取 Game 数据
   useEffect(() => {
     axios
-      .post(
-        // '/getGame/?game_id=' + gameId,
-        '/getGame/',
-        formatFormUrlencoded({
-          action: 'post',
-          game_id: gameId
-        }),
+      .get(
+        '/game_id/' + gameId,
       )
-      .then((e) => {
-        console.log("eeeeeeeee", e);
-        // if (e.data && Array.isArray(e.data)) {
-        //   // 如果异步获取的数据不为空
-        //   // 写入 gameList
-        //   setGameList(e.data);
-        // } else {
-        //   throw new Error('response is error');
-        // }
+      .then(({ data }: { data: GameFields; }) => {
+        if (data) {
+          /**
+           * 如果异步获取的数据不为空
+           * 由于是字符串类型，需要先转成JSON格式
+           * 再写入 initialScript
+           */
+          setInitialScript(JSON.parse(data.init_script));
+        } else {
+          throw new Error('response is error');
+        }
       })
       .catch((err) => {
         console.error('err=', err);

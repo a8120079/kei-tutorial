@@ -6,7 +6,7 @@
  * @FilePath: /kei-tutorial/client/src/types/props/LevelFormInputTextProps.ts
  */
 import { Control, FieldErrors, FieldPath } from "react-hook-form";
-import { LevelFormValues } from "../form";
+import { LevelFormValues } from "../forms";
 import { ChangeEventHandler } from "react";
 
 export interface LevelFormInputTextProps {

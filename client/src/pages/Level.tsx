@@ -1,7 +1,7 @@
 /*
  * @Author: fantiga
  * @Date: 2023-07-15 12:48:35
- * @LastEditTime: 2023-08-13 14:42:41
+ * @LastEditTime: 2023-09-16 18:29:13
  * @LastEditors: fantiga
  * @FilePath: /kei-tutorial/client/src/pages/Level.tsx
  */
@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { Controller, FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
 import { GameFields, LevelFormValues } from "@/types";
 import { LevelFormInputText } from "@/components/FormInputText";
-import axios, { formatFormUrlencoded } from "@/utils/axios";
+import axios from "@/utils/axios";
 
 const defaultValues: LevelFormValues = {
   userName: "",
@@ -44,7 +44,7 @@ const Level: FC = () => {
   useEffect(() => {
     axios
       .get(
-        '/getGameList',
+        '/game_list',
       )
       .then((e) => {
         if (e.data && Array.isArray(e.data)) {
