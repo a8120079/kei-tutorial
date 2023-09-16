@@ -11,6 +11,7 @@ import { BoardElements, GameFields } from "@/types";
 
 // 定义脚本
 // const tempScript: [number, number, boolean][] = [[2, 1, false], [3, 1, false], [2, 2, false], [2, 3, false], [2, 4, false], [2, 5, false], [2, 6, false], [2, 7, false], [3, 7, false], [3, 8, false], [4, 8, false], [5, 8, false], [6, 1, false], [6, 2, false], [6, 3, false], [6, 4, false], [6, 5, false], [6, 6, false], [6, 7, false], [4, 1, true], [3, 2, true], [3, 3, true], [3, 4, true], [3, 5, true], [4, 7, true], [5, 7, true], [5, 6, true], [5, 5, true], [5, 4, true], [5, 3, true], [5, 2, true], [5, 1, false], [4, 4, true]];
+// 正确的结果
 const tempScript2: [number, number, boolean][] = [[0, 2, false]];
 
 // 初始化棋盘
@@ -44,7 +45,7 @@ const Game: FC = () => {
   const [nextBtnDisabled, setNextBtnDisabled] = useState<boolean>(true);
   const [initialStonesPlaced, setInitialStonesPlaced] = useState<boolean>(false);
   // 初始棋谱
-  const [initialScript, setInitialScript] = useState<[number, number, boolean][]>([]);
+  const [initScript, setInitScript] = useState<[number, number, boolean][]>([]);
 
   /**
    * 重置棋盘
@@ -77,11 +78,16 @@ const Game: FC = () => {
       newBoardState[row][col] = player === false ? 1 : 2;
       setBoardState(newBoardState);
       setCurrentPlayer(!player);
+
+      // 判断落子坐标是否和正确坐标相符，true=相符；false=不相符
       const isCorrectPlacement = tempScript2.some(
         ([r, c, _]) => row === r && col === c
       );
       console.log("isCorrectPlacement:", isCorrectPlacement); // デバッグのために追加
+
+      // 设置正解状态，true=正解；false=不正解
       setIsCorrect(isCorrectPlacement);
+      // 设置 Next 按钮是否可用，true=不可用；false=可用
       setNextBtnDisabled(isCorrectPlacement);
     }
     // console.log(row, col);
@@ -143,11 +149,11 @@ const Game: FC = () => {
    * 对初始棋谱进行落子
    */
   useEffect(() => {
-    for (let i = 0; i < initialScript.length; i++) {
-      placeStone(initialScript[i][0], initialScript[i][1], initialScript[i][2]);
+    for (let i = 0; i < initScript.length; i++) {
+      placeStone(initScript[i][0], initScript[i][1], initScript[i][2]);
     }
     setInitialStonesPlaced(true);
-  }, [initialScript]);
+  }, [initScript]);
 
   // 异步获取 Game 数据
   useEffect(() => {
@@ -157,12 +163,13 @@ const Game: FC = () => {
       )
       .then(({ data }: { data: GameFields; }) => {
         if (data) {
+          console.log(data);
           /**
            * 如果异步获取的数据不为空
            * 由于是字符串类型，需要先转成JSON格式
-           * 再写入 initialScript
+           * 再写入 initScript
            */
-          setInitialScript(JSON.parse(data.init_script));
+          setInitScript(JSON.parse(data.init_script));
         } else {
           throw new Error('response is error');
         }
