@@ -9,11 +9,6 @@ import { GameTitle } from "@/components/GameTitle";
 import axios from "@/utils/axios";
 import { BoardElements, GameFields } from "@/types";
 
-// 定义脚本
-// const tempScript: [number, number, boolean][] = [[2, 1, false], [3, 1, false], [2, 2, false], [2, 3, false], [2, 4, false], [2, 5, false], [2, 6, false], [2, 7, false], [3, 7, false], [3, 8, false], [4, 8, false], [5, 8, false], [6, 1, false], [6, 2, false], [6, 3, false], [6, 4, false], [6, 5, false], [6, 6, false], [6, 7, false], [4, 1, true], [3, 2, true], [3, 3, true], [3, 4, true], [3, 5, true], [4, 7, true], [5, 7, true], [5, 6, true], [5, 5, true], [5, 4, true], [5, 3, true], [5, 2, true], [5, 1, false], [4, 4, true]];
-// 正确的结果
-const tempScript2: [number, number, boolean][] = [[0, 2, false]];
-
 // 初始化棋盘
 const initialBoardState: number[][] = [
   Array(9).fill(0),
@@ -44,8 +39,9 @@ const Game: FC = () => {
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [nextBtnDisabled, setNextBtnDisabled] = useState<boolean>(true);
   const [initialStonesPlaced, setInitialStonesPlaced] = useState<boolean>(false);
-  // 初始棋谱
+  // 设置了两个状态变量（initScript和execScript）
   const [initScript, setInitScript] = useState<[number, number, boolean][]>([]);
+  const [execScript, setExecScript] = useState<[number, number, boolean][]>([]);
 
   /**
    * 重置棋盘
@@ -80,7 +76,7 @@ const Game: FC = () => {
       setCurrentPlayer(!player);
 
       // 判断落子坐标是否和正确坐标相符，true=相符；false=不相符
-      const isCorrectPlacement = tempScript2.some(
+      const isCorrectPlacement = execScript.some(
         ([r, c, _]) => row === r && col === c
       );
       console.log("isCorrectPlacement:", isCorrectPlacement); // デバッグのために追加
@@ -155,7 +151,9 @@ const Game: FC = () => {
     setInitialStonesPlaced(true);
   }, [initScript]);
 
+
   // 异步获取 Game 数据
+
   useEffect(() => {
     axios
       .get(
@@ -167,9 +165,10 @@ const Game: FC = () => {
           /**
            * 如果异步获取的数据不为空
            * 由于是字符串类型，需要先转成JSON格式
-           * 再写入 initScript
+           * 再写入 initScript 和 execScript
            */
           setInitScript(JSON.parse(data.init_script));
+          setExecScript(JSON.parse(data.exec_script));
         } else {
           throw new Error('response is error');
         }
