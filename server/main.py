@@ -7,7 +7,7 @@ FilePath: /kei-tutorial/server/main.py
 """
 
 
-from fastapi import Depends, FastAPI, Path
+from fastapi import Body, Depends, FastAPI, Path
 from sqlalchemy.orm import Session
 from utils import (
     crud,
@@ -58,12 +58,16 @@ async def getGame(game_id: int = Path(...), db: Session = Depends(get_db)):
 
 
 # 获取记录列表
-@app.post("/record_list", response_model=schemas.Record)
-async def getRecordList(game: schemas.GameCreate, db: Session = Depends(get_db)):
-    return crud.create_record(db=db, game=game)
+@app.get("/record_list", response_model=list[schemas.Record])
+async def getRecordList(db: Session = Depends(get_db)):
+    return crud.get_records(db)
 
 
-# 获取手顺列表
-@app.post("/getStepList", response_model=schemas.Step)
-async def getStepList(game: schemas.Step, db: Session = Depends(get_db)):
-    return crud.create_step(db=db, game=game)
+# 创建 record
+@app.post("/game_id/{game_id}/records", response_model=schemas.Record)
+async def postRecord(
+    game_id: int = Path(...),
+    record: schemas.RecordCreate = Body(...),
+    db: Session = Depends(get_db),
+):
+    return crud.create_record(db, record, game_id)

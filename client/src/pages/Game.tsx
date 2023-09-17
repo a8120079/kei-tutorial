@@ -1,65 +1,112 @@
 import Head from "@/components/Head";
 import { Button, Grid } from "@mui/material";
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Stack from '@mui/material/Stack';
 import { useLocation } from "react-router-dom";
 import { GameTitle } from "@/components/GameTitle";
-import axios from "@/utils/axios";
+import axios, { formatFormUrlencoded } from "@/utils/axios";
 import { BoardElements, GameFields } from "@/types";
 
-// 初始化棋盘
-const initialBoardState: number[][] = [
-  Array(9).fill(0),
-  Array(9).fill(0),
-  Array(9).fill(0),
-  Array(9).fill(0),
-  Array(9).fill(0),
-  Array(9).fill(0),
-  Array(9).fill(0),
-  Array(9).fill(0),
-  Array(9).fill(0),
-];
-
+// 棋盘单边可落子数
 const boardSize = 9;
+// 交叉点数
 const intersectionSize = 30;
+// 棋盘宽度
 const boardWidth = boardSize * intersectionSize;
 
 const Game: FC = () => {
   const { gameId } = useLocation().state;
   const controller = new AbortController();
 
-  // 棋盘状态
-  const [boardState, setBoardState] = useState<number[][]>(initialBoardState);
+  // 初始化棋盘
+  const initialBoardState: number[][] = [];
+  const initial = () => {
+    for (let i = 0; i < boardSize; i++) {
+      initialBoardState[i] = [];
+      for (let j = 0; j < boardSize; j++) {
+        initialBoardState[i][j] = 0;
+      }
+    }
+    return initialBoardState;
+  };
 
+  // 设置计时器
+  const [now, setNow] = useState<Date>(new Date());
+  const [isRun, setIsRun] = useState<boolean>(true);
+  const [timer, setTimer] = useState<string>("00:00:00");
+  const [costTime, setCostTime] = useState<string>("00:00:00");
+  // 棋盘状态
+  const [boardState, setBoardState] = useState<number[][]>(initial());
   // 棋子轮替，true=白；false=黑
   const [currentPlayer, setCurrentPlayer] = useState<boolean>(false);
   const [boardElements, setBoardElements] = useState<BoardElements[]>([]);
-  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
-  const [nextBtnDisabled, setNextBtnDisabled] = useState<boolean>(true);
+  // 正解状态，true=正解；false=不正解
+  const [isCorrect, setIsCorrect] = useState<boolean>(false);
+  // Replay 按钮可用状态，true=不可用；false=可用
+  const [btnReplayDisabled, setReplayBtnDisabled] = useState<boolean>(true);
+  // Next 按钮可用状态，true=不可用；false=可用
+  const [btnNextDisabled, setNextBtnDisabled] = useState<boolean>(true);
+  // 用户是否已落子
   const [initialStonesPlaced, setInitialStonesPlaced] = useState<boolean>(false);
-  // 设置了两个状态变量（initScript和execScript）
+  // 设置初始脚本 initScript 和正确脚本 execScript
+  const currentInitScript = useRef<[number, number, boolean][]>([]);
   const [initScript, setInitScript] = useState<[number, number, boolean][]>([]);
   const [execScript, setExecScript] = useState<[number, number, boolean][]>([]);
+
+  /**
+   * 自定义钩子
+   * 计时器
+   *
+   * @param {() => void} callback
+   * @param {number} delay
+   */
+  const useInterval = (callback: () => void, delay: number) => {
+    const savedCallback = useRef<() => void>(() => { });
+
+    const pauseTimer = (id: NodeJS.Timeout) => clearInterval(id);
+
+    // Remember the latest callback.
+    useEffect(() => {
+      savedCallback.current = callback;
+    }, [callback]);
+
+    // Set up the interval.
+    useEffect(() => {
+      const tick = () => {
+        savedCallback.current();
+      };
+      if (delay !== null) {
+        let id = setInterval(tick, delay);
+        if (!isRun) {
+          pauseTimer(id);
+        }
+        // return () => pauseTimer(id);
+        return () => clearInterval(id);
+      }
+    }, [delay, isRun]);
+  };
 
   /**
    * 重置棋盘
    */
   const resetBoard = useCallback(() => {
-    setBoardState(initialBoardState);
+    setNow(new Date());
+    setIsRun(true);
+    setTimer("00:00:00");
+    setCostTime("00:00:00");
+    setBoardState(initial());
     setCurrentPlayer(false);
+    setBoardElements([]);
+    setIsCorrect(false);
+    setReplayBtnDisabled(true);
     setNextBtnDisabled(true);
-    setIsCorrect(null);
-    setBoardElements([]); // Clear the board elements
-  }, []);
+    setInitialStonesPlaced(false);
 
-  /**
-   * 响应 Replay 按钮事件
-   */
-  const handleRePlayButtonClick = useCallback(() => {
-    resetBoard();
-  }, [resetBoard]);
+    initPlaceStone();
+
+  }, [initScript, execScript]);
 
   /**
    * 放棋子的方程
@@ -69,32 +116,66 @@ const Game: FC = () => {
    * @param {boolean} player
    */
   const placeStone = useCallback((row: number, col: number, player: boolean = currentPlayer) => {
-    if (boardState[row][col] === 0) {
-      const newBoardState = [...boardState];
-      newBoardState[row][col] = player === false ? 1 : 2;
-      setBoardState(newBoardState);
-      setCurrentPlayer(!player);
+    const newBoardState: number[][] = [...boardState];
+    newBoardState[row][col] = player === false ? 1 : 2;
+    setBoardState(newBoardState);
+    setCurrentPlayer(!player);
 
-      // 判断落子坐标是否和正确坐标相符，true=相符；false=不相符
-      const isCorrectPlacement = execScript.some(
-        ([r, c, _]) => row === r && col === c
-      );
-      console.log("isCorrectPlacement:", isCorrectPlacement); // デバッグのために追加
-
-      // 设置正解状态，true=正解；false=不正解
-      setIsCorrect(isCorrectPlacement);
-      // 设置 Next 按钮是否可用，true=不可用；false=可用
-      setNextBtnDisabled(isCorrectPlacement);
+    // 判断落子坐标是否和正确坐标相符
+    if (execScript.some(([r, c, _]) => row === r && col === c)) {
+      setIsCorrect(true);
+      setNextBtnDisabled(false);
+      setIsRun(false);
     }
-    // console.log(row, col);
-  }, [boardState]);
+  }, [boardState, initScript, execScript]);
 
   /**
-   * 初期表示1
-   * 重置棋盘
+   * 响应手动落子事件
+   *
+   * @param {number} row
+   * @param {number} col
    */
-  useEffect(() => {
-    resetBoard();
+  const handlePlaceStoneClick = useCallback((row: number, col: number) => {
+    setInitialStonesPlaced(true);
+    setReplayBtnDisabled(false);
+    placeStone(row, col);
+  }, [execScript]);
+
+  const initPlaceStone = useCallback(() => {
+    for (let i = 0; i < currentInitScript.current.length; i++) {
+      placeStone(currentInitScript.current[i][0], currentInitScript.current[i][1], currentInitScript.current[i][2]);
+    }
+  }, [currentInitScript, initScript, execScript]);
+
+  /**
+   * 响应 Replay 按钮事件
+   */
+  // const handleReplayClick = useCallback(() => {
+  //   resetBoard();
+  // }, []);
+
+  /**
+   * 响应 Next 按钮事件
+   */
+  const handleNextClick = useCallback(async () => {
+    await axios
+      .post(
+        '/game_id/' + gameId + "/records",
+        formatFormUrlencoded({
+          user_name: sessionStorage.getItem("userName") ?? "",
+        })
+      )
+      .then(({ data }: { data: GameFields; }) => {
+        console.log(data);
+        if (data) {
+          setInitScript(JSON.parse(data.init_script));
+        } else {
+          throw new Error('response is error');
+        }
+      })
+      .catch((err) => {
+        console.error('err=', err);
+      });
   }, []);
 
   /**
@@ -116,7 +197,7 @@ const Game: FC = () => {
         board.appendChild(horizontalLine);
       }
     }
-  }, [boardSize]);
+  }, []);
 
   useEffect(() => {
     const elements: BoardElements[] = [];
@@ -136,24 +217,19 @@ const Game: FC = () => {
         });
       }
     }
-    // console.log(elements);
     setBoardElements(elements);
-
-  }, [boardState, currentPlayer]);
+  }, [boardState]);
 
   /**
    * 对初始棋谱进行落子
    */
   useEffect(() => {
-    for (let i = 0; i < initScript.length; i++) {
-      placeStone(initScript[i][0], initScript[i][1], initScript[i][2]);
-    }
-    setInitialStonesPlaced(true);
+    initPlaceStone();
   }, [initScript]);
 
-
-  // 异步获取 Game 数据
-
+  /**
+   * 异步获取 Game 数据
+   */
   useEffect(() => {
     axios
       .get(
@@ -161,12 +237,12 @@ const Game: FC = () => {
       )
       .then(({ data }: { data: GameFields; }) => {
         if (data) {
-          console.log(data);
           /**
            * 如果异步获取的数据不为空
            * 由于是字符串类型，需要先转成JSON格式
            * 再写入 initScript 和 execScript
            */
+          currentInitScript.current = JSON.parse(data.init_script);
           setInitScript(JSON.parse(data.init_script));
           setExecScript(JSON.parse(data.exec_script));
         } else {
@@ -180,11 +256,37 @@ const Game: FC = () => {
     return () => controller.abort();
   }, []);
 
+  /**
+   * 计时器
+   */
+  useInterval(() => {
+    const currentTime = new Date();
+    const elapsedTimeInSeconds = Math.floor((currentTime.getTime() - now.getTime()) / 1000);
+    const hours = Math.floor(elapsedTimeInSeconds / 3600);
+    const minutes = Math.floor((elapsedTimeInSeconds % 3600) / 60);
+    const seconds = elapsedTimeInSeconds % 60;
+
+    const formattedTime = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    setTimer(formattedTime);
+  }, 1000);
+
+  /**
+   * 初期表示1
+   * 重置棋盘
+   */
+  useEffect(() => {
+    resetBoard();
+  }, []);
+
   return (
     <>
       {/* 把棋盘显示在页面上 */}
       <Head />
-      <GameTitle userName={sessionStorage.getItem("userName") ?? ""} gameId={gameId} />
+      <GameTitle
+        userName={sessionStorage.getItem("userName") ?? ""}
+        gameId={gameId}
+        timer={timer}
+      />
       <Grid container justifyContent="center" spacing={1} sx={{ padding: "6px" }}>
         <Grid item>
           <div
@@ -201,8 +303,7 @@ const Game: FC = () => {
                 key={`intersection-${item.row}-${item.col}-${index}`}
                 className="intersection"
                 style={{ left: `${item.x}px`, top: `${item.y}px`, }}
-                onClick={() => placeStone(item.row, item.col)}
-
+                onClick={() => handlePlaceStoneClick(item.row, item.col)}
               >
                 {item.stone === 1 && <div className="stone black" />}
                 {item.stone === 2 && <div className="stone white" />}
@@ -211,18 +312,17 @@ const Game: FC = () => {
             ))}
           </div>
           <Grid container justifyContent="center" spacing={2} sx={{ padding: "6px", marginTop: "6px" }}>
+            {/* <Grid item>
+              <Button variant="contained" disabled={btnReplayDisabled} onClick={handleReplayClick}>Replay</Button>
+            </Grid> */}
             <Grid item>
-              <Button variant="contained" disabled={nextBtnDisabled} onClick={handleRePlayButtonClick}>Replay</Button>
-            </Grid>
-            <Grid item>
-              <Button variant="contained" disabled={nextBtnDisabled}>Next</Button>
+              <Button variant="contained" disabled={btnNextDisabled} onClick={handleNextClick}>Next</Button>
             </Grid>
           </Grid>
         </Grid>
       </Grid>
-      {/* show error/correct message */}
       {
-        isCorrect !== null && (
+        initialStonesPlaced && (
           <Grid container justifyContent="center" spacing={1} sx={{ padding: "6px" }}>
             <Grid item>
               <Stack sx={{ width: '100%' }} spacing={2}>
@@ -232,11 +332,9 @@ const Game: FC = () => {
                       <AlertTitle>正解</AlertTitle>
                     </Alert>
                   ) : (
-                    <>
-                      <Alert severity="error">
-                        <AlertTitle>不正解</AlertTitle>
-                      </Alert>
-                    </>
+                    <Alert severity="error">
+                      <AlertTitle>不正解</AlertTitle>
+                    </Alert>
                   )
                 }
               </Stack>

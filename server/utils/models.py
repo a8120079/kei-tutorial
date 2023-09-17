@@ -20,30 +20,24 @@ class Game(Base):
     # Column 就是列的意思
     # Integer、String、Boolean 就是数据表中，列的类型
     game_id = Column(Integer, autoincrement=True, primary_key=True, index=True)
-    game_name = Column(String)
+    game_name = Column(String, index=True)
     level = Column(Integer)
     init_script = Column(String)
     exec_script = Column(String)
+
+    records = relationship("Record", back_populates="games")
 
 
 class Record(Base):
     __tablename__ = "records"
 
     record_id = Column(Integer, autoincrement=True, primary_key=True, index=True)
-    username = Column(String)
+    game_id = Column(Integer, ForeignKey("games.game_id"))
+    game_name = Column(String)
+    user_name = Column(String, index=True)
     level = Column(Integer)
+    is_correct = Column(Boolean, default=False)
+    cost_time = Column(String)
     create_time = Column(DateTime)
 
-    step = relationship("Step", back_populates="record")
-
-
-class Step(Base):
-    __tablename__ = "steps"
-
-    steps_id = Column(Integer, autoincrement=True, primary_key=True, index=True)
-    username = Column(String)
-    record_id = Column(Integer, ForeignKey("records.record_id"))
-    is_correct = Column(Boolean)
-    uptime = Column(DateTime)
-
-    record = relationship("Record", back_populates="step")
+    games = relationship("Game", back_populates="records")
