@@ -11,7 +11,9 @@ export interface RecordFields {
   game_name: string;
   user_name: string;
   level: number;
+  level_text?: string;
   is_correct: boolean;
+  is_correct_text?: string;
   cost_time: string;
   create_time: Date;
 }
