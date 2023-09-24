@@ -1,12 +1,12 @@
 """
 Author: fantiga
 Date: 2023-07-27 22:45:02
-LastEditTime: 2023-09-16 16:33:19
+LastEditTime: 2023-09-18 12:34:34
 LastEditors: fantiga
 FilePath: /kei-tutorial/server/utils/models.py
 """
 
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime
+from sqlalchemy import Column, ForeignKey, Integer, String, DateTime
 from sqlalchemy.orm import relationship
 
 from .database import Base
@@ -34,9 +34,9 @@ class Record(Base):
     record_id = Column(Integer, autoincrement=True, primary_key=True, index=True)
     game_id = Column(Integer, ForeignKey("games.game_id"))
     game_name = Column(String)
-    user_name = Column(String, index=True)
+    user_name = Column(String)
     level = Column(Integer)
-    is_correct = Column(Boolean, default=False)
+    is_correct = Column(Integer)
     cost_time = Column(String)
     create_time = Column(DateTime)
 

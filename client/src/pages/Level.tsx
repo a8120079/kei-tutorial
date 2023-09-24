@@ -1,7 +1,7 @@
 /*
  * @Author: fantiga
  * @Date: 2023-07-15 12:48:35
- * @LastEditTime: 2023-09-16 18:29:13
+ * @LastEditTime: 2023-09-18 12:31:35
  * @LastEditors: fantiga
  * @FilePath: /kei-tutorial/client/src/pages/Level.tsx
  */
@@ -31,7 +31,7 @@ const Level: FC = () => {
   const [gameList, setGameList] = useState<GameFields[]>([]);
   const [userName, setUsername] = useState<string>("");
   const form = useForm<LevelFormValues>({ defaultValues });
-  const { handleSubmit, register, control, formState: { errors } } = form;
+  const { handleSubmit, control, formState: { errors } } = form;
 
   const onValid: SubmitHandler<LevelFormValues> = data => {
     sessionStorage.setItem("userName", data.userName);
