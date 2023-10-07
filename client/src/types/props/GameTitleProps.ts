@@ -1,12 +1,10 @@
 /*
  * @Author: fantiga
  * @Date: 2023-07-29 12:38:35
- * @LastEditTime: 2023-09-17 21:15:23
+ * @LastEditTime: 2023-10-07 22:03:11
  * @LastEditors: fantiga
  * @FilePath: /kei-tutorial/client/src/types/props/GameTitleProps.ts
  */
-
-import { Dispatch, SetStateAction } from "react";
 
 export interface GameTitleProps {
   userName: string;

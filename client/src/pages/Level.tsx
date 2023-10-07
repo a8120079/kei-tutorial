@@ -1,7 +1,7 @@
 /*
  * @Author: fantiga
  * @Date: 2023-07-15 12:48:35
- * @LastEditTime: 2023-09-18 12:31:35
+ * @LastEditTime: 2023-10-07 22:02:19
  * @LastEditors: fantiga
  * @FilePath: /kei-tutorial/client/src/pages/Level.tsx
  */
@@ -29,7 +29,6 @@ const Level: FC = () => {
   const navigate = useNavigate();
   const controller = new AbortController();
   const [gameList, setGameList] = useState<GameFields[]>([]);
-  const [userName, setUsername] = useState<string>("");
   const form = useForm<LevelFormValues>({ defaultValues });
   const { handleSubmit, control, formState: { errors } } = form;
 
@@ -88,7 +87,7 @@ const Level: FC = () => {
               <LevelFormInputText
                 control={control}
                 name="userName"
-                value={userName}
+                value={sessionStorage.getItem("userName") ?? ""}
                 label="お名前"
                 onChange={(event) => form.setValue("userName", event.target.value)}
                 errors={errors}

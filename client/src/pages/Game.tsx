@@ -18,7 +18,6 @@ const boardWidth = boardSize * intersectionSize;
 
 const Game: FC = () => {
   const { gameId } = useLocation().state;
-  // const [currentGameId, setCurrentGameId] = useState<number>(gameId);
   const currentGameId = useRef<number>(gameId);
   const controller = new AbortController();
 
@@ -29,7 +28,6 @@ const Game: FC = () => {
   const timer = useRef<string>("00:00:00");
 
   // 初始化棋盘
-  // const defaultBoardState: number[][] = useMemo(() => [], [currentGameId]);
   const defaultBoardState: number[][] = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -42,18 +40,7 @@ const Game: FC = () => {
     [0, 0, 0, 0, 0, 0, 0, 0, 0]
   ];
 
-  // const initial = () => {
-  //   for (let i = 0; i < boardSize; i++) {
-  //     defaultBoardState[i] = [];
-  //     for (let j = 0; j < boardSize; j++) {
-  //       defaultBoardState[i][j] = 0;
-  //     }
-  //   }
-  //   return defaultBoardState;
-  // };
-
   // 棋盘状态
-  // const [boardState, setBoardState] = useState<number[][]>(defaultBoardState);
   const boardState = useRef<number[][]>(defaultBoardState);
   // 棋子轮替，true=白；false=黑
   const [currentPlayer, setCurrentPlayer] = useState<boolean>(false);
@@ -63,7 +50,7 @@ const Game: FC = () => {
   // Replay 按钮可用状态，true=不可用；false=可用
   // const [btnReplayDisabled, setReplayBtnDisabled] = useState<boolean>(true);
   // Next 按钮可用状态，true=不可用；false=可用
-  const [btnNextDisabled, setNextBtnDisabled] = useState<boolean>(true);
+  // const [btnNextDisabled, setNextBtnDisabled] = useState<boolean>(true);
   // 用户是否已落子
   const [initialStonesPlaced, setInitialStonesPlaced] = useState<boolean>(false);
   // 设置初始脚本 initScript 和正确脚本 execScript
@@ -120,7 +107,7 @@ const Game: FC = () => {
     isCorrect.current = false;
     // setReplayBtnDisabled(true);
     // Next 按钮可用状态，true=不可用；false=可用
-    setNextBtnDisabled(true);
+    // setNextBtnDisabled(true);
     // 用户是否已落子
     setInitialStonesPlaced(false);
     // 设置初始脚本 initScript 和正确脚本 execScript
@@ -179,15 +166,14 @@ const Game: FC = () => {
   const placeStone = useCallback((row: number, col: number, params: { player?: boolean, isHuman?: boolean; }) => {
     const { player, isHuman = false } = params;
     const newBoardState: number[][] = !isHuman ? [...defaultBoardState] : [...boardState.current];
-    console.log("currentGameId:", currentGameId.current, "isHuman:", isHuman, "newBoardState:", newBoardState, "boardState:", boardState.current, "defaultBoardState:", defaultBoardState);
     newBoardState[row][col] = player === false ? 1 : 2;
     boardState.current = newBoardState;
-    setCurrentPlayer(!player);
+    // setCurrentPlayer(!player);
 
     // 判断落子坐标是否和正确坐标相符
     if (execScript.some(([r, c, _]) => row === r && col === c)) {
       isCorrect.current = true;
-      setNextBtnDisabled(false);
+      // setNextBtnDisabled(false);
       setIsRun(false);
     } else {
       isCorrect.current = false;
@@ -206,9 +192,9 @@ const Game: FC = () => {
    * @param {number} col
    */
   const handlePlaceStoneClick = (row: number, col: number) => {
-    setInitialStonesPlaced(true);
+    // setInitialStonesPlaced(true);
     // setReplayBtnDisabled(false);
-    placeStone(row, col, { player: true, isHuman: true });
+    placeStone(row, col, { player: currentPlayer, isHuman: true });
   };
 
   /**
@@ -219,6 +205,7 @@ const Game: FC = () => {
   const initPlaceStone = (script: [number, number, boolean][]) => {
     for (let i = 0; i < script.length; i++) {
       placeStone(script[i][0], script[i][1], { player: script[i][2], isHuman: false });
+      setCurrentPlayer(!script[i][2]);
     }
   };
 

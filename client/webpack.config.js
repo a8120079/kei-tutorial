@@ -13,6 +13,22 @@ const config = {
   /** Specify the packaging method: 'none' | 'development' | 'production' / 指定打包模式 */
   mode: "development",
   devServer: {
+    // compress: true,
+    // host: "0.0.0.0",
+    // port: 8080,
+    // hot: true,
+    // proxy: {
+    //   "**": {
+    //     target: "http://localhost:8080",
+    //     secure: false,
+    //     prependPath: false,
+    //     proxyTimeout: 1000 * 60 * 10,
+    //     timeout: 1000 * 60 * 10,
+    //     changeOrigin: true,
+    //     // pathRewrite: { "^/api": "" }
+    //   },
+    // },
+    // Solve the problem of 404 after refreshing with BrowserRouter in react-router-dom / 解决react-router-dom中使用BrowserRouter刷新后404的问题
     historyApiFallback: true,
   },
   /** Specify the entry file / 指定入口文件 */
