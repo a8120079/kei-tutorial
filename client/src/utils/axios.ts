@@ -1,16 +1,14 @@
 /*
  * @Author: fantiga
  * @Date: 2023-07-26 23:00:26
- * @LastEditTime: 2023-10-08 00:26:21
+ * @LastEditTime: 2023-10-08 17:28:09
  * @LastEditors: fantiga
  * @FilePath: /kei-tutorial/client/src/utils/axios.ts
  */
 
 import axios from "axios";
 
-// const url = window.location.protocol + "//" + window.location.hostname + ":8000";
-const url = "http://localhost:8000";
-// console.log(url);
+const url = window.location.origin + "/api";
 axios.defaults.baseURL = url;
 axios.defaults.withCredentials = false;
 axios.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";

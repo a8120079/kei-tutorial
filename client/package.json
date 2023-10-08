@@ -8,7 +8,8 @@
   "license": "MIT",
   "description": "",
   "scripts": {
-    "start": "webpack serve",
+    "dev": "webpack-dev-server",
+    "start": "npm run dev",
     "build": "webpack"
   },
   "browserslist": {
