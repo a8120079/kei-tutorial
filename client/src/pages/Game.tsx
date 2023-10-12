@@ -192,7 +192,7 @@ const Game: FC = () => {
    * @param {number} col
    */
   const handlePlaceStoneClick = (row: number, col: number) => {
-    // setInitialStonesPlaced(true);
+    setInitialStonesPlaced(true);
     // setReplayBtnDisabled(false);
     placeStone(row, col, { player: currentPlayer, isHuman: true });
   };
